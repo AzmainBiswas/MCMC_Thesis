@@ -1,0 +1,86 @@
+\documentclass[]{report}
+\usepackage{bookmark}
+\usepackage[utf8]{inputenc}
+\usepackage{authblk}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+\usepackage[english]{babel}
+
+
+%% theorem, lemma, proof, etc. %%
+%% for unnumbed use \newtheorem* and delete section in [---] %%
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}[section]
+
+%% \thetheorem %%
+
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{decorations.fractals}
+\usepackage{float}
+\usepackage{dsfont}
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=30mm,
+    right=30mm,
+    top=20mm,
+    bottom=20mm,
+}
+
+%%%% hyperref %%%%
+\usepackage{url}
+\usepackage{hyperref} % for link
+\hypersetup{
+    colorlinks=true,
+    allcolors=black,
+}
+\usepackage{cleveref}
+%%% fancyhdr %%%% for footer and Hader of document
+\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\lhead{lest hand head} %% left Hader %%
+%\rhead{Measure Theory} %% right Hader %%
+\cfoot{\thepage} %% central footer %%
+
+\setlength{\headheight}{14.49998pt}
+
+%% for code 
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\lstset{language=Python,
+        basicstyle=\ttfamily\small,
+        %% keywordstyle=\color{blue},
+        commentstyle=\color{black},
+        %% stringstyle=\color{orange},
+        showstringspaces=false,
+        breaklines=true,
+        frame=single,
+        %% numbers=left,
+        %% numberstyle=\tiny\color{gray}
+}
+
+%%% spacing in document %%%
+\usepackage{setspace}
+\onehalfspacing
+
+\title{MCMC}
+\author{Azmain Biswas}
+\date{April 2023}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\include{chap/Intro}
+\include{chap/GRV}
+
+\end{document}
