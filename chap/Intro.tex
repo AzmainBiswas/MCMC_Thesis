@@ -3,7 +3,48 @@
 In the ever-evolving landscape of mathematical and statistical research and application, 
 the integration of simulation techniques has emerged as a powerful tool to unravel complex phenomena, validate theoretical frameworks, 
 and facilitate a deeper understanding of intricate mathematical structures. 
-Simulation techniques are usually used when any problem  is heard to calculate with the help of traditional analytical method
-like simulation of a Solitaire Card game, to analysis this traditionally we have to deal with the number like $52! = 8.06\times 10^{67}$ 
-this number is beyond astronomically large so, dealing with this number is very hard even for a high performant computer, to deal with this problem
-Polish-American mathematician and nuclear physicist Stanistaw Ulam with the help of Von Neumann develop Monte Carlo Simulation.
+Simulation is a computer-based exploratory exercise that aids in understanding how
+the behavior of a random or even a deterministic process changes in response to
+changes in input or the environment. It is essentially the only option left when exact
+mathematical calculations are impossible, or require an amount of effort that the user
+is not willing to invest. Even when the mathematical calculations are quite doable, a
+preliminary simulation can be very helpful in guiding the researcher to theorems that
+were not a priori obvious or conjectured, and also to identify the more productive
+corners of a particular problem. Although simulation in itself is a machine-based
+exercise, credible simulation must be based on appropriate theory. A simulation
+algorithm must be theoretically justified before we use it.
+
+The classic theory of simulation includes such time-tested methods as the original Monte Carlo, 
+Inverse Transform method, Accept-Reject method, Bivariate techniques  
+from standard distributions in common use. They involve a varied degree of sophistication. 
+Markov chain Monte Carlo is the name for a collection of simulation algorithms for simulating from
+the distribution of very general types of random variables taking values in quite
+general spaces. MCMC methods have truly revolutionized simulation because of an
+inherent simplicity in applying them, the generality of their scopes, and the diversity
+of applied problems in which some suitable form of MCMC has helped in making
+useful practical advances. MCMC methods are the most useful when conventional
+Monte Carlo is difficult or impossible to use.
+
+Simulation depend on various theoretical aspect such as 
+The weak law of Large Number, The Central limit theory, The sample mean and sample variance etcetera.
+
+\section{Mathematical Preliminaries}
+
+\begin{theorem}[The Weak Law of Large Numbers]
+    Let $X_1,X_2,\ldots$ be a sequence of in dependent and identically distributed 
+    random variables having mean $ \mu $, Then, for any $ \epsilon >0 $,
+    \[
+        P \left( \left|\frac{X_1+X_2+ \ldots + X_n }{n} - \mu \right| > \epsilon \right) \to 0 
+    \]
+\end{theorem}
+
+\begin{theorem}[The Central Limit Theorem]
+    Suppose $X_1, X_2, \ldots  $ is a sequence of i.i.d random variables with 
+    $E[X_i]=\mu$ and $Var[X_i]=\sigma ^{2} < \infty$. Then, 
+    \[
+        \lim_{n \to \infty} P\left( \frac{X_1+\ldots+X_n - n\mu}{\sigma \sqrt{n } < n } \right) = \Phi(Z)
+    \]
+    Were, $\Phi(Z)$ denote the distribution function of a standard normal distribution.
+\end{theorem}
+
+
