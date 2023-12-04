@@ -28,23 +28,48 @@ Monte Carlo is difficult or impossible to use.
 Simulation depend on various theoretical aspect such as 
 The weak law of Large Number, The Central limit theory, The sample mean and sample variance etcetera.
 
+There are various type of simulation technique in standard simulation theory 
+such as,
+
+\begin{enumerate}
+    \itemsep=-.3em
+	\item The Inverse Transform Method
+	\item Accept-Reject Algorithm
+	\item Bivariate Techniques
+	\item Ordinary Monte Carlo
+	\item Importance Sampling
+	\item Markov Chain Monte Carlo
+\end{enumerate}
+
+This project work focus mainly on these simulation techniques.
+
+In Chapter 2, we discuss about how to generate random variable both
+uniform and continuous, by using method like The Inverse Transform Method, 
+Accept-Reject Algorithm, Bivariate Techniques.
+
+In Chapter 3, we focus on Ordinary Monte Carlo and how to use it to solve problem like evaluating integration and evaluating the value of $\pi$.
+
+In Chapter 4, the focus shifts to Importance Sampling and how it beneficial
+from Ordinary Monte Carlo by some example. Learn about how to chose 
+optimal Importance sample distribution.
+
 \section{Mathematical Preliminaries}
 
 \begin{theorem}[The Weak Law of Large Numbers]
-    Let $X_1,X_2,\ldots$ be a sequence of in dependent and identically distributed 
-    random variables having mean $ \mu $, Then, for any $ \epsilon >0 $,
-    \[
-        P \left( \left|\frac{X_1+X_2+ \ldots + X_n }{n} - \mu \right| > \epsilon \right) \to 0 
-    \]
+	Let $X_1,X_2,\ldots$ be a sequence of in dependent and identically distributed 
+	random variables having mean $ \mu $, Then, for any $ \epsilon >0 $,
+	\[
+		P \left( \left|\frac{X_1+X_2+ \ldots + X_n }{n} - \mu \right| > \epsilon \right) \to 0 
+	\]
 \end{theorem}
 
 \begin{theorem}[The Central Limit Theorem]
-    Suppose $X_1, X_2, \ldots  $ is a sequence of i.i.d random variables with 
-    $E[X_i]=\mu$ and $Var[X_i]=\sigma ^{2} < \infty$. Then, 
-    \[
-        \lim_{n \to \infty} P\left( \frac{X_1+\ldots+X_n - n\mu}{\sigma \sqrt{n } } < n \right) = \Phi(Z)
-    \]
-    Were, $\Phi(Z)$ denote the distribution function of a standard normal distribution.
+	Suppose $X_1, X_2, \ldots  $ is a sequence of i.i.d random variables with 
+	$E[X_i]=\mu$ and $Var[X_i]=\sigma ^{2} < \infty$. Then, 
+	\[
+		\lim_{n \to \infty} P\left( \frac{X_1+\ldots+X_n - n\mu}{\sigma \sqrt{n } } < n \right) = \Phi(Z)
+	\]
+	Were, $\Phi(Z)$ denote the distribution function of a standard normal distribution.
 \end{theorem}
 
 
