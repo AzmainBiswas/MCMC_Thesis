@@ -19,7 +19,7 @@ have respective pmfs $f_0$, $f_1$, then also $\lambda(x)=\frac{f_0(x)}{f_1(x)}$
 This raises the interesting possibility that we can sample from a general $F_1$, and
 subsequently use the usual Monte Carlo estimate
 \[
-	\hat{\mu} = \frac{1}{n} \sum_{i = 0}^{n} \lambda(X_i)\phi_0(X_i) = E_{F_1}[\lambda(X_i)\phi_0(X_i)].
+	\hat{\mu} = \frac{1}{n} \sum_{i = 1}^{n} \lambda(X_i)\phi_0(X_i) = E_{F_1}[\lambda(X_i)\phi_0(X_i)].
 \]
 
 where $X_1, X_2, \ldots, X_n$ is Monte Carlo sample from $F_1$.
@@ -50,7 +50,7 @@ We can visualize this method by an example.
 		  & = E_U[10 \times h(U)] \text{ where, }  U\sim U(0,10).
 	\end{align*}
 
-	By Ordinary Monte Carlo technique we can estimate $I$ by $\frac{1}{N}\sum_{i = 0}^{N} 10 \times h(U_i)$ where $U_i\sim U(0,10)$ for $i=1,2,\ldots,N$
+	By Ordinary Monte Carlo technique we can estimate $I$ by $\frac{1}{N}\sum_{i = 1}^{N} 10 \times h(U_i)$ where $U_i\sim U(0,10)$ for $i=1,2,\ldots,N$
 	for the large number of $N$.
 	\begin{figure}[H]
 		\centering
@@ -77,7 +77,7 @@ We can visualize this method by an example.
 	\end{table}
 	Here we can see that for sample size 1M we get a pretty good estimation of $I$ with less then $0.6\%$ error but the variance is very high.
 	If we see at left of Figure (\ref{fig:hxwithU01andN01}) we can see we are taking unnecessary value from low frequency part of $h(x)$ that is,
-	from extream left and right. If we use choose an importance sampling distribution that has similar curve as $h(x)$ then we can estimate $I$ with low variance.
+	from extream left and right. If we choose an importance sampling distribution that has similar curve as $h(x)$ then we can estimate $I$ with low variance.
 	If we choose importance sampling distribution as $N(5,1)$ then we see from right of Figure (\ref{fig:hxwithU01andN01}) it has similar pattern as $h(x)$.
 	\begin{figure}[H]
 		\centering
@@ -95,7 +95,7 @@ We can visualize this method by an example.
 	\end{align*}
 	Where, $\lambda(x) = \frac{p(X)}{q(X)}$ here $p(x)$ is pdf of $U(0,1)$ and $q(x)$ is pdf of $N(5,1)$. Now using usual Monte Carlo estimate
 	\[
-		I = \frac{1}{N} \sum_{i = 0}^{N} 10 h(X_i) \lambda(X_i)
+		I = \frac{1}{N} \sum_{i = 1}^{N} 10 h(X_i) \lambda(X_i)
 	\]
 	where $X_1, X_2,\ldots,X_N$ is Monte Carlo sample from $N(5,1)$.
 	\begin{figure}[H]
@@ -116,17 +116,78 @@ We can visualize this method by an example.
 			10000                & 1.0072                              & 0.3603            \\
 			100000               & 1.0039                              & 0.3595            \\
 			1000000              & 0.9999                              & 0.3580            \\
-            \hline
+			\hline
 		\end{tabular}
 		\caption{Evaluating $\int_{0}^{10} e^{-2 |x-5|} dx$ using Importance Sampling.}
 		\label{tab:mytable}
 	\end{table}
+	Here we can see that the estimation of $I$ is pretty close and variance is also
+	lower the Original Monte Carlo method.
 \end{example}
-
-
 
 A more contemporary view of importance sampling is that we do not approach
 importance sampling as an optimization problem, but because the circumstances
 force us to consider different sampling distributions $F$.
 
 Now, we also assume that $F_0,$ $F_1$ both have densities, say $f_0$, $f_1$.
+If $F_0$, $F_1$ are both discrete then the notation only change but the argument is same.
+Suppose then $f_i(x)=\frac{h_i(x)}{c_i},\ i=0,1$, where the assumption is that $h_0$, $h_1$
+are completely known and also computable, but $c_0$, $c_1$ are unknown and are not even computable.
+Then, as we showed above, for any function $\phi$ for which the expectation $E_{F_0}[\phi(X)]$ exist,
+
+\begin{align*}
+	\mu & = E_{F_0}[\phi(X)] := \int \frac{f_0(x)}{f_1(x)}\phi(x)f_1(x)dx      \\
+	    & =\frac{c_1}{c_0} \int \frac{\phi(x)h_0(x)}{h_1(x)}f_1(x)dx           \\
+	    & =\frac{c_1}{c_0} E_{F_1}\left( \frac{\phi(X)h_0(X)}{h_1(X)} \right).
+\end{align*}
+
+This is a useful reduction, but we have to deal with the fact that ratio $\frac{c_1}{c_0}$
+is not known to us. Now, if we use the special function $\phi(x)\equiv 1$, the same
+representation above gives us
+\begin{align*}
+	1                        & = \frac{c_1}{c_0} E_{F_1} \left( \frac{h_0(X)}{h_1(X)} \right) \\
+	\implies \frac{c_1}{c_0} & = \frac{1}{E_{F_1} \left( \frac{h_0(X)}{h_1(X)} \right)}
+\end{align*}
+and because $h_0,$ $h_1$ are explicitly known to us, we have a way to get rid of the
+quotient $\frac{c_1}{c_0}$ and write the final \textit{importance sampling identity}
+\begin{align*}
+	E_{F_0}[\phi(x)] = \frac{E_{F_1}\left( \frac{\phi(X)h_0(X)}{h_1(X)} \right)}{E_{F_1} \left( \frac{h_0(X)}{h_1(X)} \right)}
+\end{align*}
+We can now use an available Monte Carlo sample $X_1,X_2,\ldots,X_n$ from $F_1$
+to find Monte Carlo estimates for $\mu = E_{F_0}[\phi(x)]$
+
+The basic plug-in estimate for $\mu$ is the so-called ratio estimate
+\[
+	\hat{\mu} = \frac{\sum_{i = 1}^{n}\frac{\phi(X_i)h_0(X_i)}{h_1(X_i)} }{\sum_{i = 1}^{n} \frac{h_0(X_i)}{h_1(X_i)}}.
+\]
+
+\begin{example}[Binomial Bayes problem with an Atypical Prior]
+	Suppose $X\sim Bin(m,p)$ for some fixed $m$ and $p$ has the prior density $c\sin^{2}(\pi p)$,
+	where $c$ is a normalizing constant.
+	Throughout the example, $c$ denotes a generic constant,
+	and is not intended to mean the same constant at every use.
+
+    The posterior density of $p$ given $X = x$ is
+    \[
+        \pi(p|X=x) = cp^{x}(1-p)^{m-x}\sin ^{2}(\pi p), \ \ 0<p<1.  
+    \]
+    The problem is to find the posterior mean
+    \[
+        \mu = c \int_{0}^{1} p[cp^{x}(1-p)^{m-x}\sin ^{2}(\pi p)]dp.
+    \]
+
+    We use importance sampling to approximate the value of $\mu$. Towards this, choose
+    \[
+        \phi(p)=p, \ h_0(p) = p^{x} (1-p)^{m-x} \sin ^{2}(\pi p),\ h_1(p) = p^{x}(1-p)^{m-x},   
+    \]
+    so that if $p_1,p_2,\ldots,p_n$ are samples from $F_1$, (i.e. $p_i\sim Beta(x+1, m-x+1)$),
+    then the importance sampling estimate of the posterior mean $\mu$ is
+    \begin{align*}
+        \hat{\mu} &= \frac{\sum_{i=1}^{n}\frac{\phi(p_i)h_0(p_i)}{h_1(p_i)} }{\sum_{i=1}^{n}\frac{h_0(p_i)}{h_1(p_i)} } \\ 
+                  &= \frac{\sum_{i=1}^{n}p_i\sin ^{2}(\pi p_i) }{\sum_{i=1}^{n} \sin ^{2}(\pi p_i) }.
+    \end{align*}
+
+    Note that we did not need to calculate the normalizing constant in the posterior density.
+    We take $m=100$, $x=45$ for specificity.
+
+\end{example}

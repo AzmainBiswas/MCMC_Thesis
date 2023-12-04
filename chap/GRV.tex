@@ -298,7 +298,7 @@ This can be achieved by choosing $c$ to be smallest possible number, described i
 \end{theorem}
 \begin{proof}
 	\begin{align*}
-		P\left( U<=\frac{f(x)}{cg(x)} \right) & = \int_{-\infty}^{\infty} \int_{0}^{\frac{f(x)}{cg(x)}} g(t) du dt                                           \\
+		P\left( U \le \frac{f(x)}{cg(x)} \right) & = \int_{-\infty}^{\infty} \int_{0}^{\frac{f(x)}{cg(x)}} g(t) du dt                                           \\
 		                                      & = \int_{-\infty}^{\infty} \frac{f(t)}{cg(t)}g(t)dt = \int_{-\infty}^{\infty} \frac{f(t)}{c}dt = \frac{1}{c}.
 	\end{align*}
 	Because any $c$ that can be chosen must be at least as large as $\sup_x\frac{f(x)}{g(x)}$
@@ -308,7 +308,7 @@ This can be achieved by choosing $c$ to be smallest possible number, described i
 In the example (\ref{generate normal}) for $N(0,1)$ the acceptance rate is $\sqrt{\frac{\pi}{2 e}} = 0.7601$.
 And for example (\ref{generate beta}) for Beta(5,2) the acceptance rate is 0.4069
 
-\section{The Polar Method for Generating Normal Random \\ Variables}
+\subsection{The Polar Method for Generating Normal Random \\ Variables}
 
 Let $X$ and $Y$ be independent slandered normal random variable and let $R$ and $\theta$
 denote the polar coordinates of vector $(X,Y)$. That is,
