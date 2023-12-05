@@ -299,7 +299,7 @@ This can be achieved by choosing $c$ to be smallest possible number, described i
 \begin{proof}
 	\begin{align*}
 		P\left( U \le \frac{f(x)}{cg(x)} \right) & = \int_{-\infty}^{\infty} \int_{0}^{\frac{f(x)}{cg(x)}} g(t) du dt                                           \\
-		                                      & = \int_{-\infty}^{\infty} \frac{f(t)}{cg(t)}g(t)dt = \int_{-\infty}^{\infty} \frac{f(t)}{c}dt = \frac{1}{c}.
+		                                         & = \int_{-\infty}^{\infty} \frac{f(t)}{cg(t)}g(t)dt = \int_{-\infty}^{\infty} \frac{f(t)}{c}dt = \frac{1}{c}.
 	\end{align*}
 	Because any $c$ that can be chosen must be at least as large as $\sup_x\frac{f(x)}{g(x)}$
 	, obviously $1/c$ is maximized by choosing $c=\sup_x\frac{f(x)}{g(x)}.$
@@ -308,8 +308,7 @@ This can be achieved by choosing $c$ to be smallest possible number, described i
 In the example (\ref{generate normal}) for $N(0,1)$ the acceptance rate is $\sqrt{\frac{\pi}{2 e}} = 0.7601$.
 And for example (\ref{generate beta}) for Beta(5,2) the acceptance rate is 0.4069
 
-\subsection{The Polar Method for Generating Normal Random \\ Variables}
-
+\subsection{Bivariate Techniques}
 Let $X$ and $Y$ be independent slandered normal random variable and let $R$ and $\theta$
 denote the polar coordinates of vector $(X,Y)$. That is,
 \begin{align*}
@@ -320,35 +319,50 @@ denote the polar coordinates of vector $(X,Y)$. That is,
 Since $X$ and $Y$ are independent, their joint density is the product of their individual densities and thus given by
 \begin{align*}
 	f(x,y) & = \frac{1}{\sqrt{2\pi}} e^{-x^{2}/2 } \frac{1}{\sqrt{2\pi}} e^{-y^{2}/2 } \\
-	       & = \frac{1}{\sqrt{2\pi}} e^{-(x^{2}+y^{2})/2}
+	       & = \frac{1}{2\pi} e^{-(x^{2}+y^{2})/2}
 \end{align*}
-To determine the joint density of $R^{2} $ and $\Theta$ - call it $f(d,\theta)$ we make the change of variables
+To determine the joint density of $R^{2} $ and $\Theta$ - call it $g(d,\theta)$ we make the change of variables
 \[
 	d=x^{2}+y^{2}, \ \  \theta=\tan^{-1}\left( \frac{y}{x} \right)
 \]
-Then the joint density function of $R^{2} $ and $\Theta$ is,
+Then the joint density function of $d $ and $\Theta$ is,
+
+\begin{align*}
+    \label{jacobian transformation}
+    g(d,\theta) &= |J| f(x,y) \\ 
+                &= |J| \frac{1}{2\pi} e^{-(x^{2}+y^{2})/2} \numberthis
+\end{align*}
+where,
+\[
+	J =
+	\begin{vmatrix}
+        \frac{\partial x}{\partial t} & \frac{\partial x}{\partial \theta} \\[1ex]
+		\frac{\partial y}{\partial t} & \frac{\partial y}{\partial \theta} \\
+	\end{vmatrix} = \frac{1}{2}.
+\]
+Then, replacing the value of $ x = \sqrt{d}\sin(\theta)  $ and $ y=\sqrt{d}\cos(\theta) $ in the Equitation (\ref{jacobian transformation}) we get,
 \begin{equation}
-	f(d,\theta) = \frac{1}{2}\frac{1}{2\pi} e^{-d/2},\ \ \ 0< d<\infty, 0<\theta<2 \pi.
+	g(d,\theta) = \frac{1}{2}\frac{1}{2\pi} e^{-d/2},\ \ \ 0< d<\infty, 0<\theta<2 \pi.
 \end{equation}
 
-As $f(d,\theta)$ is equal to product of the product of $Exp(1/2)$ density and $U(0,2 \pi)$, it follows that,\\ 
-$R^{2}$ and $\Theta$ are independent, with $R^{2} \sim Exp(1/2)$ and $\Theta \sim U(0, 2 \pi)$ \\ 
+As $g(d,\theta)$ is equal to product of the product of $Exp(1/2)$ density and $U(0,2 \pi)$, it follows that,\\
+$R^{2}$ and $\Theta$ are independent, with $R^{2} \sim Exp(1/2)$ and $\Theta \sim U(0, 2 \pi)$ \\
 Hence to generate a pair of independent slandered normal random variables $X$ and $Y$ by generating $R^{2} $ and $\Theta$ in polar coordinates and then
 transform back to rectangular coordinates. Hence the algorithm is:\\
 STEP 1: Generate random number $U_1, U_2 \sim U(0,1)$.\\
 STEP 2: $ R^{2} = - 2 \ln U_1 $ and $\Theta = 2 \pi U_2 $. \\
 STEP 3: Now let,
 \begin{align*}
-    X &= R \cos \Theta = \sqrt{-2\ln U_1}\cos(2 \pi U_2) \\
-    Y &= R \sin \Theta = \sqrt{-2 \ln U_1} \sin(2 \pi U_2). \label{Box-muller} \numberthis
+	X & = R \cos \Theta = \sqrt{-2\ln U_1}\cos(2 \pi U_2)                                   \\
+	Y & = R \sin \Theta = \sqrt{-2 \ln U_1} \sin(2 \pi U_2). \label{Box-muller} \numberthis
 \end{align*}
 
 The transformation given by equitations (\ref{Box-muller}) are known as Box-Muller transformation.
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/nor_polar.png}
-    \caption{Generating independent $X, Y \sim N(0,1)$ with polar method}
-    \label{normal polar}
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/nor_polar.png}
+	\caption{Generating independent $X, Y \sim N(0,1)$ with polar method}
+	\label{normal polar}
 \end{figure}
 
