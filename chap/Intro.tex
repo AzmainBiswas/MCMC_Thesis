@@ -32,7 +32,7 @@ There are various type of simulation technique in standard simulation theory
 such as,
 
 \begin{enumerate}
-    \itemsep=-.3em
+	\itemsep=-.3em
 	\item The Inverse Transform Method
 	\item Accept-Reject Algorithm
 	\item Bivariate Techniques
@@ -55,6 +55,100 @@ optimal Importance sample distribution.
 
 \section{Mathematical Preliminaries}
 
+\begin{definition}[Probability Space]
+	A probability spacs is a triple $(\Omega, \mathcal{F}, P)$ consisting of:
+	\begin{enumerate}
+		\item[(a)] the sample space $\Omega$ (an arbitrary non-empty set)
+		\item[(b)] a non-empty collection of subsets $\mathcal{F} $ of $ \Omega $,
+		      called \textit{sigma field} of subspace of $ \Omega $, 
+		      such taht,
+		      \begin{itemize}
+			      \item[(i)] $ \Omega \in \mathcal{F} $
+			      \item[(ii)] if $ A \in \mathcal{F} $, then $ A^{c}\in \mathcal{F}  $
+			      \item [(iii)] if $ A_n\in \mathcal{F},\ n=1,2,\ldots $, then $ \cup_n=1^{\infty}A_n \in \mathcal{F}  $
+		      \end{itemize}
+		\item [(c)] a probability measure $ p:\mathcal{F}\to [0,1] $, which is a real valued function on $ \mathcal{F} $
+		      such that,
+		      \begin{itemize}
+			      \item [(i)] $ P(A) \ge 0 $ for all $ A\in \mathcal{F} $
+			      \item [(ii)] $ P(\Omega) = 1 $
+			      \item [(iii)] if $ A_1,A_2,\ldots $ are disjoint sets in $ \mathcal{F} $, then $ P(\cup_n A_n) = \sum_{n} P(A_n)  $.
+		      \end{itemize}
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Conditional Probability]
+	Let $A$, $B$ be general events with respect to some sample space $ \Omega $,
+	and suppose $ P(A)>0 $. The \textit{conditional probability} of $ B $ given $ A $ is defined as 
+	\[
+		P(B|A) = \frac{P(A\cap B}{P(A)}.
+	\]
+\end{definition}
+
+\begin{theorem}[Bayes's Theorem]
+	Let, $ \{ A_1,A_2,\ldots,A_n \} $ be a partition of sample space $ \Omega $. 
+	Let $ B $ be a some fixed event. Then
+	\[
+		P(A_j|B) = \frac{P(B|A_j)P(A_j)}{\sum_{i=1}^{n}P(B|A_i)P(A_i) }.
+	\]
+\end{theorem}
+
+\begin{definition}[Random Variable]
+	Let, $ \Omega $ be a sample space corresponding to some experiment and let 
+	$ X:\Omega\to \mathds{R} $ be a function from the sample space to the real line. 
+	Then $ X $ is called a \textit{random Variable}
+\end{definition}
+
+\begin{definition}[Cumulative Distribution Function]
+	The cumulative distribution function(CDF) or simply distributed function, $ F $ of 
+	a random variable $ X $ is define for any real number $ x $ by
+	\[
+		F(x) = P(X \le x).
+	\]
+\end{definition}
+
+\begin{definition}[Probability Mass Function]
+	For a discrete random variable $ X $ we define its Probability mass function(pmf)
+	$ p(x) $ by
+	\[
+		p(x) = P(X=x)
+	\]
+	and we have,
+	\[
+		\sum_{i\in \Lambda} p(x_i) = 1. \text{ and } p_i \ge 0. 
+	\]
+\end{definition}
+
+\begin{definition}[ Probability Density Function ]
+	For a continuous random variable if there is a non-negative function $ f(x) $
+	defined for all real number $ x $ and having the property that for any set $ C\subset \mathds{R} $,
+	\[
+		P(X\in C) = \int_{C}f(x) dx 
+		.\]
+	The function $ f $ is called probability density function(pdf) of the random variable $ X $.
+\end{definition}
+
+The relation between CDF and pdf is express by,
+\[
+	F(a) = P(X\in (-\infty, a]) = \int_{-\infty}^{a} f(x) dx.
+\]
+
+\begin{definition}[Exception]
+	If $ X $ is a random variable,
+	then the \textit{exception} or \textit{expected value} of $ X $, also called the mean of $ X $ and denoted by $ E(X) $, is define by
+	\[
+		E(X) = \int xdF(x) 
+	\]
+\end{definition}
+
+\begin{definition}[Variance]
+	If $ X $ is a random variable with mean $ E(X) $, then the variance of $ X $,
+	denoted by $ Var(X) $, is define by,
+	\[
+		Var(X)=E\left( (X-E(X))^{2} \right)
+	\]
+\end{definition}
+
 \begin{theorem}[The Weak Law of Large Numbers]
 	Let $X_1,X_2,\ldots$ be a sequence of in dependent and identically distributed 
 	random variables having mean $ \mu $, Then, for any $ \epsilon >0 $,
@@ -72,4 +166,33 @@ optimal Importance sample distribution.
 	Were, $\Phi(Z)$ denote the distribution function of a standard normal distribution.
 \end{theorem}
 
+\subsection*{Sample Mean and Sample Variance}
+Suppose that $ X_1,X_2,\ldots,X_n $ are independent random variable having the same
+distribution function. Let $ \mu $ and $ \sigma ^{2} $ denote, respectively 
+their mean and variance that is, $ \mu = E(X_i) $ and $ \sigma ^{2} = Var(X_i) $.
+The quantity
+\[
+	\bar{X} \equiv \sum_{i=1}^{n} \frac{X_i}{n}
+\]
 
+which is the arithmetic average of the $ n $ data values, is called the \textit{sample mean}.
+When the population mean $ \mu $ is unknown, the sample mean is often used to estimate $ \mu .$
+
+Because, 
+\begin{align*}
+	E(\bar{X}) & = E\left( \sum_{i=1}^{n} \frac{X_i}{n} \right) \\ 
+	           & = \sum_{i=1}^{n} \frac{E(X_i)}{n}              \\ 
+	           & = \frac{n \mu}{n} = \mu
+\end{align*}
+
+if follows that $ \bar{X} $ is an unbiased estimator of $ \mu $, where we say that an estimator
+of parameter is an unbiased estimator of that an estimator of a parameter is an unbiased estimator
+of that parameter if its expected value is equal to the parameter.
+
+The quantity $ S ^{2} $, define by 
+\[
+	S ^{2} = \frac{\sum_{i=1}^{n}(X_i - \bar(X))^{2} }{n-1}
+\]
+is called the \textit{sample variance} .
+
+Whish is also unbised of $ \sigma ^{2} $
