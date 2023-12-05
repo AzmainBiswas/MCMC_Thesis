@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[a4paper , 12pt]{report}
 \usepackage{bookmark}
 \usepackage[utf8]{inputenc}
 \usepackage{authblk}
@@ -22,19 +22,19 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
+\DeclareGraphicsExtensions{.PNG, .png}
 \usepackage{subcaption}
 \usepackage{tikz}
 \usetikzlibrary{decorations.fractals}
 \usepackage{float}
 \usepackage{dsfont}
-\usepackage{geometry}
-\geometry{
-    a4paper,
-    left=30mm,
-    right=30mm,
-    top=20mm,
-    bottom=20mm,
-}
+
+\usepackage[a4paper]{geometry}
+\geometry{left=2.5cm}
+\geometry{top=2cm}
+\geometry{bottom=2.5cm}
+\geometry{right=2.5cm}
+
 
 %%%% hyperref %%%%
 \usepackage{url}
@@ -71,7 +71,7 @@
 
 %%% spacing in document %%%
 \usepackage{setspace}
-\onehalfspacing
+\doublespacing
 
 \title{MCMC}
 \author{Azmain Biswas}
@@ -80,18 +80,52 @@
 \begin{document}
 
 \include{macro}
+\pagenumbering{roman} % for roman numbering
+
+\thispagestyle{empty}
 \include{title}
+\thispagestyle{empty}
+\cleardoublepage
+
+\thispagestyle{empty}
 \include{Cirtificate}
+\thispagestyle{empty}
+\cleardoublepage
+
+\thispagestyle{empty}
 \include{acknowledgement}
+\thispagestyle{empty}
+\cleardoublepage
+
+\setstretch{1}
+\phantomsection
+\addcontentsline{toc}{chapter}{Contents}
 \tableofcontents
+\cleardoublepage
+
+
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
+\cleardoublepage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\cleardoublepage
+
+\pagenumbering{arabic} % for numerical numbering
+
 \include{chap/Intro}
 \include{chap/GRV}
 \include{chap/monte_carlo}
 \include{chap/importance_sampling}
 
+
 \nocite{*}
-\bibliographystyle{plain}
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{unsrt}
 \bibliography{Referance}
 
 \end{document}
