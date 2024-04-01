@@ -48,7 +48,7 @@ We can visualize this method by an example.
 		I & = \int_{0}^{10} \phi(x) dx                                                                                                            \\
 		  & = \int_{0}^{10} \phi(x)\frac{10}{10} dx                                                                                               \\
 		  & = \int_{0}^{10} 10 \times \phi(x) \frac{1}{10} dx = \int_{0}^{10} 10\phi(x) f_0(x) dx \text{ where } f_0(x)\text{ pdf of }U(0,1) \numberthis \\
-		  & = E_U[10 \times h(U)] \text{ where, }  U\sim U(0,10).
+		  & = E_U[10 \times \phi(U)] \text{ where, }  U\sim U(0,10).
 	\end{align*}
 
 	By Ordinary Monte Carlo technique we can estimate $I$ by $\frac{1}{N}\sum_{i = 1}^{N} 10 \times \phi(U_i)$ where $U_i\sim U(0,10)$ for $i=1,2,\ldots,N$
@@ -99,13 +99,7 @@ We can visualize this method by an example.
 		I = \frac{1}{N} \sum_{i = 1}^{N} 10 \phi(X_i) \lambda(X_i)
 	\]
 	where $X_1, X_2,\ldots,X_N$ is Monte Carlo sample from $N(5,1)$.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\textwidth]{int_h(x)_ipsam.png}
-		\caption{Evaluating $\int_{0}^{10} e^{-2 |x-5|} dx$ using Importance Sampling.}
-		\label{fig:impotrancesampling1}
-	\end{figure}
-	\begin{table}[h]
+	\begin{table}[H]
 		\centering
 		\begin{tabular}{l c c}
 			\hline
@@ -122,6 +116,13 @@ We can visualize this method by an example.
 		\caption{Evaluating $\int_{0}^{10} e^{-2 |x-5|} dx$ using Importance Sampling.}
 		\label{tab:mytable}
 	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{int_h(x)_ipsam.png}
+		\caption{Evaluating $\int_{0}^{10} e^{-2 |x-5|} dx$ using Importance Sampling.}
+		\label{fig:impotrancesampling1}
+	\end{figure}
 	Here we can see that the estimation of $I$ is pretty close and variance is also
 	lower the Original Monte Carlo method.
 \end{example}
@@ -206,7 +207,6 @@ The basic plug-in estimate for $\mu$ is the so-called ratio estimate
 		\end{tabular}
 		\caption{Importance Sampling Estimates of $\mu$ for Different Sample Sizes}
 		\label{tab:importance-sampling-mu}
-		Here, even with importance sampling size $n=50$, the estimation error is pretty low.
 	\end{table}
     \begin{figure}[H]
         \centering
@@ -258,7 +258,7 @@ We have seen this phenomena in the Example (\ref{Binomial Bayes problem with an 
 Because Graph of $\phi(x)h_0(x)$ and $h_1(x)$ in the Figure (\ref{fig:ch4ex2plothx}), they both have the same key properties.   
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{ch4ex2plot_hx.png}
+    \includegraphics[width=0.6\textwidth]{ch4ex2plot_hx.png}
     \caption{Graph of $\phi(x)h_0(x)$ and $h_1(x)$}
     \label{fig:ch4ex2plothx}
 \end{figure}
