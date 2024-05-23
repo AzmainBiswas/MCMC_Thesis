@@ -20,6 +20,8 @@
 # *.ps
 # *.eps
 # *.pdf
+*.out.ps
+.fuse_hidden000057b500000059
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
