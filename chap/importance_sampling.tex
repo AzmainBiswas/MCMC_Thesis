@@ -77,9 +77,9 @@ We can visualize this method by an example.
 		\label{tab:IntegrationOFe-2|x*5|}
 	\end{table}
 	Here we can see that for sample size 1M, we get a pretty good estimation of $I$ with less then $0.6\%$ error. But the variance is very high.
-	If we see at left of Figure (\ref{fig:hxwithU01andN01}) we can see we are taking unnecessary value from low frequency part of $\phi(x)$ that is,
+	If we see at left of \Cref{fig:hxwithU01andN01} we can see we are taking unnecessary value from low frequency part of $\phi(x)$ that is,
 	from extreme left and right. If we choose an importance sampling distribution that has similar curve as $\phi(x)$, then we can estimate $I$ with low variance.
-	If we choose importance sampling distribution as $N(5,1)$ then we see from right of Figure (\ref{fig:hxwithU01andN01}) it has similar pattern as $\phi(x)$.
+	If we choose importance sampling distribution as $N(5,1)$ then we see from right of \Cref{fig:hxwithU01andN01} it has similar pattern as $\phi(x)$.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\textwidth]{h(x)_with_normal_and_uniform.png}
@@ -87,7 +87,7 @@ We can visualize this method by an example.
 		\label{fig:hxwithU01andN01}
 	\end{figure}
 
-	Let, $f_1(x)$ is pdf of $N(0,1)$ then, from (\ref{hx with U})
+	Let, $f_1(x)$ is pdf of $N(0,1)$ then, from \Cref{hx with U}
 	\begin{align*}
 		I & = \int_{0}^{10} 10\phi(x) f_0(x) dx                                            \\
 		  & = \int_{0}^{10} 10 \phi(x) \frac{f_0(x)}{f_1(x)} q(x)dx                          \\
@@ -254,8 +254,8 @@ suggests that the importance sampling density should follow key properties of th
 unnormalized function $\phi(x)f_0(x)$.
 For example, $f_1$ should have the same shape and tail behavior as $\phi(x)f_0(x)$.
 
-We have seen this phenomena in the Example (\ref{Binomial Bayes problem with an Atypical Prior}).
-Because Graph of $\phi(x)h_0(x)$ and $h_1(x)$ in the Figure (\ref{fig:ch4ex2plothx}), they both have the same key properties.   
+We have seen this phenomena in the \Cref{Binomial Bayes problem with an Atypical Prior}.
+Because Graph of $\phi(x)h_0(x)$ and $h_1(x)$ in \Cref{fig:ch4ex2plothx}, they both have the same key properties.   
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{ch4ex2plot_hx.png}

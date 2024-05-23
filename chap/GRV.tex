@@ -14,11 +14,11 @@ successive values $x_n, n\ge1$, by letting
 	\label{MCM}
 	x_n = a x_{n-1} \text{ modulo } m
 \end{equation}
-where $a$ and $m$ are given positive integers, and where the equation (\ref{MCM}) means that $ax_{n-1}$ is divided by  $m$ and remainder is taken as the
+where $a$ and $m$ are given positive integers, and where \Cref{MCM} means that $ax_{n-1}$ is divided by  $m$ and remainder is taken as the
 value of $x_n$. Thus, each value of $x_n$ is either $0,1, \ldots, m-1$ and the quantity $x_n / m$ is Pseudorandom number and follows
 an approximation to the value of a uniform $(0,1)$ random variable.
 
-The approach specified by equation (\ref{MCM}) to generate random numbers is called the Multiplicative Congruential Method.
+The approach specified by \Cref{MCM} to generate random numbers is called the Multiplicative Congruential Method.
 
 Another method is
 \[
@@ -233,10 +233,10 @@ The following theorem supports the method.
 	STEP 3: If  $U\le \exp\left( -(X-1)^2 /2 \right)$, retain  $X$, Otherwise, return to Step 1.\\
 
 	Once, we have simulated a random variable $X$ having density function as in
-	Equation (\ref{abs std normal}) we can obtain a standard normal $Z$ by letting
+	\Cref{abs std normal} we can obtain a standard normal $Z$ by letting
 	$Z$ be equally likely to be either  $X$ or  $-X$.
 	In Step 3, the value $X$ is accepted if  $U\le \exp\left( -(X-1)^2 /2 \right)$, which is equivalent to $- \ln U\ge (X-1)^2 /2$.
-	However, in Example (\ref{exponential distribution}) we have seen that $-\ln{U}\sim Exp(1)$ When $U\sim U(0,1)$.
+	However, in \Cref{exponential distribution} we have seen that $-\ln{U}\sim Exp(1)$ When $U\sim U(0,1)$.
 
 	So, summing up, we can generate the standard normal random variable $Z$ as follows:\\
 	STEP 1: Generate independent $X_1, X_2\sim Exp(1) $\\
@@ -305,8 +305,8 @@ This can be achieved by choosing $c$ to be smallest possible number, described i
 	, obviously $1/c$ is maximized by choosing $c=\sup_x\frac{f(x)}{g(x)}.$
 \end{proof}
 
-In the example (\ref{generate normal}) for $N(0,1)$ the acceptance rate is $\sqrt{\frac{\pi}{2 e}} = 0.7601$.
-And for example (\ref{generate beta}) for Beta(5,2) the acceptance rate is 0.4069
+In the \Cref{generate normal} for $N(0,1)$ the acceptance rate is $\sqrt{\frac{\pi}{2 e}} = 0.7601$.
+And in the \Cref{generate beta} for Beta(5,2) the acceptance rate is 0.4069
 
 \subsection{Bivariate Techniques}
 Let $X$ and $Y$ be independent slandered normal random variable and let $R$ and $\theta$
@@ -340,7 +340,7 @@ where,
 		\frac{\partial y}{\partial t} & \frac{\partial y}{\partial \theta} \\
 	\end{vmatrix} = \frac{1}{2}.
 \]
-Then, replacing the value of $ x = \sqrt{d}\sin(\theta)  $ and $ y=\sqrt{d}\cos(\theta) $ in the Equitation (\ref{jacobian transformation}) we get,
+Then, replacing the value of $ x = \sqrt{d}\sin(\theta)  $ and $ y=\sqrt{d}\cos(\theta) $ in \Cref{jacobian transformation} we get,
 \begin{equation}
 	g(d,\theta) = \frac{1}{2}\frac{1}{2\pi} e^{-d/2},\ \ \ 0< d<\infty, 0<\theta<2 \pi.
 \end{equation}
@@ -353,11 +353,11 @@ STEP 1: Generate random number $U_1, U_2 \sim U(0,1)$.\\
 STEP 2: $ R^{2} = - 2 \ln U_1 $ and $\Theta = 2 \pi U_2 $. \\
 STEP 3: Now let,
 \begin{align*}
-	X & = R \cos \Theta = \sqrt{-2\ln U_1}\cos(2 \pi U_2)                                   \\
-	Y & = R \sin \Theta = \sqrt{-2 \ln U_1} \sin(2 \pi U_2). \label{Box-muller} \numberthis
+    X & = R \cos \Theta = \sqrt{-2\ln U_1}\cos(2 \pi U_2)  \label{Box-muller1} \numberthis                                  \\
+	Y & = R \sin \Theta = \sqrt{-2 \ln U_1} \sin(2 \pi U_2). \label{Box-muller2} \numberthis
 \end{align*}
 
-The transformation given by equitations (\ref{Box-muller}) are known as Box-Muller transformation.
+The transformation given by \Cref{Box-muller1} and \Cref{Box-muller2} are known as Box-Muller transformation.
 
 \begin{figure}[H]
 	\centering
