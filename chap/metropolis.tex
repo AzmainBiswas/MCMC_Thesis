@@ -113,7 +113,7 @@ There are two approaches. First and must common one is the new value $ \theta_{t
 \[
     \theta_{t+1} = \theta_t + z
 \]
-In this case, $ q(\theta_{t},\theta_{t+1}) = g(\Theta_{t+1}-\theta_t) = g(z) $, the density associated with the random noise $ z $. If $ g(z) = g(-z) $, i.e., the density for the random variable $ z $ is symmetric.
+In this case, $ q(\theta_{t},\theta_{t+1}) = g(\theta_{t+1}-\theta_t) = g(z) $, the density associated with the random noise $ z $. If $ g(z) = g(-z) $, i.e., the density for the random variable $ z $ is symmetric.
 
 Typically we take, $ z $ to be from normal or multivariate normal distribution with mean zero. Then, $ \theta_{t+1} $ is form normal or multivariate normal distribution with mean $ \theta_t $. 
 
@@ -152,7 +152,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
     \[
         p(x) = \frac{e^{(-x^2)} \left( 2 + \sin(5x) + \sin(2x) \right) }{ \int_{-\infty}^{\infty} e^{(-u^2)} \left( 2 + \sin(5u) + \sin(2u) \right) du }
     \]
-    Now we want to generate a random variables form $ p(x) $. It is may very hard to calculate the integration in the denominator or we don't want to calculate it. i.e., we the the probability distribution up to normalizing constant.
+    Now we want to generate a random variables form $ p(x) $. It is may very hard to calculate the integration in the denominator or we don't want to calculate it. i.e., we the probability distribution up to normalizing constant.
     So we have,
     \[
         p(x) \propto e^{(-x^2)} \left( 2 + \sin(5x) + \sin(2x) \right) 
@@ -163,7 +163,137 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
         \caption{Plot of original $p(x)$}
         \label{plot of px}
     \end{figure}
+
+    Here, we choose,
+    \[
+        q(\theta_{t-1}, \theta_{t}) = q(\theta_t|\theta_{t-1}) \sim N(\theta_{t-1},\sigma^2)
+    \]
+    for some stander deviation $ \sigma $ that we have to select.
+    Then,
+    \[
+        q(\theta_{t} | \theta_{t-1}) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( - \frac{1}{2 \sigma^2} (\theta_t - \theta_{t-1})^2 \right) 
+    \]
+    and,
+    \[
+        q(\theta_{t-1}|\theta_t) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( - \frac{1}{2 \sigma^2} (\theta_{t-1} - \theta_{t})^2 \right)
+    \]
+    Then, it is clear that $ q(\theta_{t-1},\theta_t) = q(\theta_t.\theta_{t-1}) $
     
+    Hence, the acceptance probability becomes,
+    \begin{align*}
+        \alpha(\theta_{t-1},\theta_{t}) &= \min \left(  \frac{p(\theta_t)q(\theta_t.\theta_{t-1})}{p(\theta_{t-1})q(\theta_{t-1},\theta_t)}  , 1 \right) \\ 
+                                        &= \min \left( \frac{p(\theta_t)}{p(\theta_{t-1})} , 1 \right) \\
+                                        &= \min \left( \frac{e^{(-\theta_t^2)}(2 + \sin(5 \theta_t) + \sin(2 \theta_t)) }{e^{(-\theta_{t-1}^2)}(2 + \sin(5 \theta_{t-1}) + \sin(2 \theta_{t-1})) }  , 1 \right)
+    \end{align*}
+    
+    Now, using various initial state and different $ \sigma $ (stander deviation of jumping distribution) simulate samples and study them. 
+
+    \textbf{Case 1:} First we choose $ 0 $ as initial state and $ \sigma = 2 $. Then after 100000 iteration we get mean of the samples to be 0.1866 and variance of the samples to be 0.4754. 
+        From \Cref{fig:MH sample 1 values} since we are starting from middle of our target distribution the simulated values are very good estimation of desire distribution $ p(x) $. Here we see we don't need burn-in time since from beginning the means of the sample are quite same. For the sake of tradition if we throw 25\% of samples and get 0.1900 as mean, 0.4751 as variance of the new samples and 0.0057 Geweke z-score. 
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-1-values.png}
+        \caption{Accepted values and running means for case 1 ( initial state 0, $ \sigma = 2 $ ) before removing burn-ins}
+        \label{fig:MH sample 1 values}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-1-value-hist-bo.png}
+        \caption{Samples of case 1 after removing Burn-Ins}
+        \label{fig:MH sample 1 after burn-in}
+    \end{figure}
+
+    \textbf{Case 2:}  Now we take -1 as initial state and $ \sigma $ to be 2, then we get mean and variance of the samples 0.1832 and 0.4641 respectively. After removing the Burn-Ins we get mean 0.17842, variance 0.47186 and Geweke z-score 0.0111.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-2-values.png}
+        \caption{Accepted values and running means for case 2 ( initial state -1, $ \sigma = 2 $ ) before burn-in removed}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-2-value-hist-bo.png}
+        \caption{Samples of case 2 after removing Burn-Ins}
+    \end{figure}
+
+    \textbf{Case 3:} As case 3 we take initial state to be -4 and $ \sigma = 1$, then we have mean = 0.1906, variance = 0.4686. From \Cref{fig:MH sample3} we can see for first few samples we get means to fluctuate heavily after that it is stable. So, here it is necessary to remove first few term (Burn-In). After removing first 25\% of term we get, mean = 0.1695, variance = 0.4686 and Geweke z-score = -0.0079. Hence seeing the Geweke z-score we see after Burn-Ins are removed we get good estimation of $ p(x) $ (\Cref{fig:MH sample3 after burn in}).
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-3-values.png}
+        \caption{Accepted values and running means for case 3 ( initial state -4, $ \sigma = 1 $ ) before burn-in removed}
+        \label{fig:MH sample3}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{./images/metropolis/sample-3-value-hist-bo.png}
+        \caption{Samples of case 3 after removing Burn-Ins}
+        \label{fig:MH sample3 after burn in}
+    \end{figure}
+
+    \textbf{Case 4:} In this scenario, we start with an initial value far outside the desired distribution, specifically at 10, with a standard deviation of $\sigma = 2$. Observing \Cref{fig:MH sample4}, it becomes evident that removing some of the initial samples (known as Burn-Ins) is necessary. After discarding the first 25\% of the samples, we achieve a much better approximation of the target distribution. The results after this adjustment show a mean of 0.1695, a variance of 0.4686, and a Geweke z-score of -0.0095.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-4-values.png}
+        \caption{Accepted values and running means for case 4 ( initial state 10, $ \sigma = 2 $ ) before burn-in removed}
+        \label{fig:MH sample4}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-4-value-hist-bo.png}
+        \caption{Samples of case 4 after removing Burn-Ins}
+    \end{figure}
+
+    \textbf{Case 5:}  Now, let's examine some poor examples of the jumping distribution, using $\sigma = 0.025$ and an initial state of 10. Initially, the mean is 0.2626 and the variance of the sample is 1.4632. Although the mean is quite accurate, the high variance indicates a poor estimation, as confirmed by \Cref{fig:MH sample5}. It is crucial to remove the first 25\% of the samples. After discarding these initial samples, we obtain a mean of 0.0726 and a variance of 0.3740. With the reduced variance, this can be considered a good estimator.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-5-values.png}
+        \caption{Accepted values and running means for case 5 ( initial state 10, $ \sigma = 0.025 $ ) before burn-in removed}
+        \label{fig:MH sample5}
+    \end{figure}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-5-value-hist-bo.png}
+        \caption{Samples of case 5 after removing Burn-Ins}
+    \end{figure}
+
+    \textbf{Case 6:} Now we take $ \sigma $ to be 20 and initial state 15. After removing Burn-Ins we obtain mean of 0.1899 and variance of 0.4423. Here we can see not much candidates are got accepted.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-6-values.png}
+        \caption{Accepted values and running means for case 6 ( initial state 15, $ \sigma = 20 $ ) before burn-in removed}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{./images/metropolis/sample-6-value-hist-bo.png}
+        \caption{Samples of case 6 after removing Burn-Ins}
+    \end{figure}
+
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{|c|p{2cm}|c|c|c|p{2cm}|p{2cm}|p{2cm}|}
+            \hline
+            Case & Initial State & $\sigma$ & Mean & Variance & Mean after Burn-In & Variance after Burn-In & Geweke z-test \\ \hline
+            1 & 0 & 2 & 0.1866 & 0.4754 & 0.1900 & 0.4751 & 0.0057 \\ \hline
+            2 & -1 & 2 & 0.1832 & 0.4641 & 0.17842 & 0.4718 & 0.0111 \\ \hline
+            3 & -4 & 1 & 0.1906 & 0.4686 & 0.1695 & 0.4686 & - 0.0079 \\ \hline
+            4 & 10 & 2 & 0.1908 & 0.4707 & 0.1695 & 0.4686 & -0.0095 \\ \hline
+            5 & 10 & 0.025 & 0.2626 & 1.4632 & 0.0726 & 0.3740 & -0.7160 \\ \hline
+            6 & 15 & 20 & 0.1899 & 0.4423 & 0.1899 & 0.4423 & -0.0771 \\ \hline
+        \end{tabular}
+        \caption{Summary of Cases with Initial States, $\sigma$, Means, Variances, and Geweke z-test}
+    \end{table}
+
 \end{example}
 
 
