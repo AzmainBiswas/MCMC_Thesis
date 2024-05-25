@@ -1,0 +1,41 @@
+\section{The Gibbs Sampler}
+
+The Metropolis-Hastings Algorithm of the previous section can be difficult to apply when the dimension of the state space is high. 
+The generation of the chain becomes too much of a multidimensional problem and becomes at least unwieldy, and possibly undoable.
+Here Gibbs Sampler comes into play. The Gibbs Sampler is a spatial kind of Metropolis-Hastings Algorithm that very cleverly reduces the multidimensional problem into a sequence of \textit{one-dimensional} problem. 
+
+Suppose a state $ \mathbf{x} $ in the state specs $ S $ is a vector in some $ m $-dimensional specs with $ \mathbf{x} = (x_1,x_2,x_3,\ldots,x_m) $. Suppose from current state $ \mathbf{x} $ we want to jump to a new state $ \mathbf{y}\in S $. According to Gibbs sampler we change coordinate one at a time,
+such as $ (x_1,x_2,\ldots,x_m) \to (y_1,x_2,\ldots,x_m) \to (y_1,y_2,\ldots,x_m) \to \ldots \to (y_1,y_2,\ldots,y_m)  $, and each coordinate change is made by using the conditional distribution of that coordinate given the rest of the coordinates. 
+For example, the transition $ (x_1,x_2,\ldots,x_m) \to (y_1,x_1,\ldots,x_m) $ is made by simulating from the distribution $ f(x_1|x_2,\ldots,x_m) $.
+These conditional distribution of one coordinate gives all the rest are \textbf{full conditionals}. As, long as we can calculate and also simulate from all the full conditionals, a complicated multidimensional problem turns in to $ m $ one dimensional problems.
+
+If current state $ \mathbf{x} = (x_1,x_2,x_3,\ldots,x_m)  $.Pick the coordinate to be changed at random from the $ m $ available coordinate. If the coordinate picked is $ i $, then the state $ \mathbf{y} = (x_1,x_2, \ldots , x_{j-1}, x , x_{j+1}, \ldots , x_m) $ work as a candidate state.
+Then Gibbs sampler uses the Metropolis-Hastings algorithm with
+\begin{align*}
+    q(\mathbf{x},\mathbf{y}) &= \frac{1}{m} P( X_i = x | X_j = x_j, i\neq j )\\ 
+                             &= \frac{f(\mathbf(y))}{mP(X_j = x_j, i \neq j)}
+\end{align*}
+Now the acceptance probability
+\begin{align*}
+    \alpha(\mathbf{x},\mathbf{y}) &= \min \left( \frac{f(\mathbf{y})q(\mathbf{y},\mathbf{x})}{f(\mathbf{x})q(\mathbf{x},\mathbf{y})} , 1 \right) \\ 
+                                  &= \min \left(  \frac{ f(\mathbf{y})f(\mathbf{x}) }{  f(\mathbf{x})f(\mathbf{y})  } , 1  \right) \\ 
+                                  &= 1
+\end{align*}
+
+Hence, Gibbs sampler is a special Metropolis-Hastings algorithm whose acceptance probability is always 1.
+
+\subsection{Algorithm for Gibbs Sampler}
+Suppose $ \mathbf{x}\in \mathds{R}^m $. Then algorithm of The Gibbs sampler can summarized as below:
+\begin{enumerate}
+    \item Set initial values $ \mathbf{x}^{(0)} = ( x_1^{(0)}, x_2^{(0)} , \ldots , x_m^{(0)}  ) $.
+    \item Obtain a new value $ \mathbf{x}^{(j)} = ( x_1^{(j)}, x_2^{(j)}, \ldots , x_m^{(j)} )$ form $ x^{(j-1)} $ through \textit{full conditional distributions}
+            \begin{align*}
+                x_1^{(j)} &\sim f(x_1|x_2^{(j-1)}, \ldots, x_m^{(j-1)}  ),\\
+                x_2^{(j)} &\sim f(x_2|x_1^{(j)}, x_3^{(j-1)}, \ldots, x_m^{(j-1)}), \\
+                \vdots \\
+                x_m^{(j)} &\sim f(x_m|x_1^{(j)}, \ldots , x_{m-1}^{(j)}  );
+            \end{align*}
+            \item Change counter $ j $ to $ j + 1 $ and return to step 2 until convergence is reached. 
+\end{enumerate}
+
+\subsection{Examples}

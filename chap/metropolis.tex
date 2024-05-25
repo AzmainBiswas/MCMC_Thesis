@@ -135,8 +135,36 @@ Say the first 10\% and last 50\%. If the chain is at stationarity, the means of 
 and the resulting test statistic is often referred to as a \textbf{Geweke z-score}.
 A value larger than 2 indicates that the mean of
 the series is still drifting, and a longer burn-in is required before monitoring the
-chain (to extract a sampler) can begin.
+chain (to extract a sampler) can begin. Formula for Geweke z-score is given by,
+\[
+    z = \frac{\Bar{X_1} - \Bar{X_2}}{\sqrt{ \text{Var}(X_1) + \text{Var}(X_2) }}
+\]
+Where, $ X_1 $ is the first 10\% subsamples and $ X_2 $ last 50\% subsamples.
 
+\subsection{Examples}
+
+Now we see some examples how we can use Metropolis-Hastings Algorithm. 
+
+\begin{example}[Simulating from an unknown distribution]
+    The besis problem Metropolis-Hastings algorithm solves is to provided a method for sampling from some arbitrary probability distribution. In this example we see how it is works,
+
+    Suppose, we have 
+    \[
+        p(x) = \frac{e^{(-x^2)} \left( 2 + \sin(5x) + \sin(2x) \right) }{ \int_{-\infty}^{\infty} e^{(-u^2)} \left( 2 + \sin(5u) + \sin(2u) \right) du }
+    \]
+    Now we want to generate a random variables form $ p(x) $. It is may very hard to calculate the integration in the denominator or we don't want to calculate it. i.e., we the the probability distribution up to normalizing constant.
+    So we have,
+    \[
+        p(x) \propto e^{(-x^2)} \left( 2 + \sin(5x) + \sin(2x) \right) 
+    \]
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{./images/metropolis/plot-of-px.png}
+        \caption{Plot of original $p(x)$}
+        \label{plot of px}
+    \end{figure}
+    
+\end{example}
 
 
 
