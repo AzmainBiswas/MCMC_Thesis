@@ -189,7 +189,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
     Now, using various initial state and different $ \sigma $ (stander deviation of jumping distribution) simulate samples and study them. 
 
     \textbf{Case 1:} First we choose $ 0 $ as initial state and $ \sigma = 2 $. Then after 100000 iteration we get mean of the samples to be 0.1866 and variance of the samples to be 0.4754. 
-        From \Cref{fig:MH sample 1 values} since we are starting from middle of our target distribution the simulated values are very good estimation of desire distribution $ p(x) $. Here we see we don't need burn-in time since from beginning the means of the sample are quite same. For the sake of tradition if we throw 25\% of samples and get 0.1900 as mean, 0.4751 as variance of the new samples and 0.0057 Geweke z-score. 
+        From \Cref{fig:MH sample 1 values} we can see that as we are starting from middle of our target distribution the simulated values are very good estimation of desire distribution $ p(x) $. Here we see we don't need burn-in time since from beginning the means of the sample are quite same. For the sake of tradition if we throw 25\% of samples and get 0.1900 as mean, 0.4751 as variance of the new samples and 0.0057 Geweke z-score. 
 
     \begin{figure}[H]
         \centering
@@ -265,7 +265,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
         \caption{Samples of case 5 after removing Burn-Ins}
     \end{figure}
 
-    \textbf{Case 6:} Now we take $ \sigma $ to be 20 and initial state 15. After removing Burn-Ins we obtain mean of 0.1899 and variance of 0.4423. Here we can see not much candidates are got accepted.
+    \textbf{Case 6:} Now we take $ \sigma $ to be 20 and initial state 15. After removing Burn-Ins we obtain mean of 0.1899 and variance of 0.4423. Here we can see not much candidates are getting accepted.
 
     \begin{figure}[H]
         \centering
@@ -295,6 +295,135 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
     \end{table}
 
 \end{example}
+
+
+\begin{example}[Finding distribution of some observed data]
+
+    Another use case of Metropolis-Hastings Algorithm to find distribution of some observed data using \textbf{Bayesian Method}. Suppose we have 1000 observed samples. Now we want to find the distribution of the samples, i.e. from which distribution the samples is taken so we can generate more sample data from that distribution. Our observed data looks like \Cref{fig:observed sample} .
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{images/metropolis/example2-observation.png}
+        \caption{Observed Samples}
+        \label{fig:observed sample}
+    \end{figure}
+
+    From \Cref{fig:observed sample} its looks like samples are form Normal Distribution with mean ($ \mu_{obs} $) 10 but we don't know the variance ($ \sigma^2 $). Using MH algorithm with the help of Bayesian method we try to find the variance. For that, at first we discuss about \textbf{Bayesian Method}.
+
+    \begin{align*}
+        P(\Theta = \theta| X=x) &= \frac{P(X=x,\Theta=\theta)}{P(X=x)} \\ 
+                                &= \frac{P(X=x|\Theta=\theta)P(\Theta=\theta)}{\sum_{\theta}P(X=x|\Theta=\theta)P(\Theta=\theta) } \label{eq:Bayesian theorem} \numberthis
+    \end{align*}
+
+    \Cref{eq:Bayesian theorem} we know as \textbf{Bayes' theorem} for continuous case we may write \Cref{eq:Bayesian theorem} as 
+    \[
+        f(\theta|x) = \frac{f(x|\theta)f(\theta)}{\int f(x|\theta)f(\theta)d \theta } \label{eq:Bayes theorem for continuous} \numberthis
+    \]
+    here, the probability density $ f(\theta) $ is called \textbf{prior distribution}, $ f(\theta|x) $ is known as \textbf{posterior distribution} 
+
+    If we have $ n $ IID observations $ X_1,X_2,X_3,\ldots,X_n $, we replace $ f(x|\theta) $ with 
+    \[
+        f(x_1,x_2,\ldots,x_n|\theta) = \prod_{i=1}^{n} f(x_i|\theta) = \mathcal{L}_n(\theta)
+    \]
+    $ \mathcal{L}_n(\theta) $ is known as \textbf{likelihood function}. Now, we denote $ X^{n} = (X_1,X_2,\ldots,X_n) $ and $ x_n = (x_1,x_2,\ldots,x_n) $. 
+
+    Now, 
+
+    \begin{equation}
+        f(\theta|x^{n} ) = \frac{f(x^{n}|\theta)f(\theta) }{\int f(x^{n}|\theta)f(\theta)d \theta } = \frac{\mathcal{L}_n(\theta)f(\theta)}{\int \mathcal{L}_n(\theta) f(\theta)d \theta} \propto \mathcal{L}_n(\theta)f(\theta)
+    \end{equation}
+    
+    Since, $ \int \mathcal{L}_n(\theta)f(\theta)d \theta  $ does not depend on $ \theta $
+
+    So, we can summarize Bayesian Method to be
+    \[
+        f(\theta|x^{n} ) \propto \mathcal{L}_n(\theta)f(\theta) \label{eq:bayesian method} \numberthis
+    \]
+    choosing some prior beliefs using some observed data we upgrade our beliefs and calculate the posterior.
+
+    Now coming to our example write the \Cref{eq:bayesian method} as,
+
+    \[
+        f(\sigma|D,\theta) \propto \mathcal{L}_n(\sigma)f(\sigma)
+    \]
+
+    Here, we are taking the prior to be $ f(\sigma) $ as $ \mu $ is constant and 
+    \[
+        f(d_i|\mu,\sigma) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( - \frac{(d_i -\mu )^2}{2 \sigma^2} \right)
+    \]
+    then, likelihood function is given by,
+    \[
+        \mathcal{L}_n(\sigma) = \prod_{i=1}^{n} f(d_i|\mu,\sigma) = \prod_{i=1}^{n} \left( \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( - \frac{(d_i -\mu )^2}{2 \sigma^2} \right) \right)
+    \]
+
+    Now the question is that how we choose prior? If we know $ \sigma $ can't be negative as $ \sigma = \sqrt{ \frac{1}{n} \sum_{i}^{n} (d_i - \mu)^2 } $. So we take,
+
+    \[
+        f(\sigma) = 
+        \begin{cases}
+            0, \ \ \sigma \le 0 \\
+            1, \ \ \sigma > 0
+        \end{cases} \numberthis \label{eq:prior}
+    \]
+
+    We take \textbf{jumping distribution}  to be,
+    \[
+        q(\sigma_{t+1}|\sigma_{t}) = N(\sigma_t,1) \label{eq:jumping for mh example2} \numberthis
+    \]
+    Now, for acceptance probability,
+    we accept $ \sigma_{t+1} $ if,
+    \begin{equation}
+        \label{eq:1st accept mh example2}
+        \frac{\mathcal{L}_n(\sigma_{t+1})f(\sigma_{t+1})}{\mathcal{L}_n(\sigma_{t})f(\sigma_{t})} \ge 1
+    \end{equation}
+    If the ratio is less then 1, then we compare it to a uniform random number from $ [0,1] $. If the ratio is larger or equal to the random number we accept $ \sigma_{t+1} $ else we reject it.
+
+    Now we take $ \log $ on the both side of \Cref{eq:1st accept mh example2}. Since $ \log $ is increasing function so sign will be same then we have,
+    \begin{gather*}
+        \log \left(  \mathcal{L}_n(\sigma_{t+1})f(\sigma_{t+1}) \right) - \log \left(  \mathcal{L}_n(\sigma_{t})f(\sigma_{t})\right) \ge 0 \\
+        \text{or, } \log( \mathcal{L}_n(\sigma_{t+1}) ) + \log(f(\sigma_{t+1})) \ge \log(\mathcal{L}_n(\sigma_t)) + \log(f(\sigma_t)) \\
+        \text{or, } \sum_{i=1}^n \log(f(d_i|\mu,\sigma_{t+1})) + \log(f(\sigma_{t+1}))  \ge \sum_{i = 1}^{n} \log(f(d_i|\mu,\sigma_t)) + \log (f(\sigma_t))\\
+        \text{or, } \sum_{i = 1}^{n} \left( \log(\sigma_{t+1}\sqrt{2 \pi}) - \left( \frac{(d_i - \mu)^2}{2 \sigma_{t+1}^2} \right) \right) + \log(f(\sigma_{t+1})) \ge \\ \sum_{i = 1}^{n} \left( \log(\sigma_{t}\sqrt{2 \pi}) - \left( \frac{(d_i - \mu)^2}{2 \sigma_{t}^2} \right) \right) + \log(f(\sigma_{t})) \label{eq:2nd accept mh example2} \numberthis
+    \end{gather*} \\ 
+    Now, we accept $ \sigma_{t+1} $ if it satisfies \Cref{eq:2nd accept mh example2} or if not satisfies the Equation we calculate $ \alpha(\sigma_{t+1},\sigma_t) $ by,
+
+    \begin{align*}
+        \alpha(\sigma_{t+1}, \sigma_t) = \exp \bigg( & \sum_{i=1}^{n} \left( \log(\sigma_{t+1} \sqrt{2 \pi}) - \frac{(d_i - \mu)^2}{2 \sigma_{t+1}^2} \right) + \log(f(\sigma_{t+1})) \\
+                                                     & - \sum_{i=1}^{n} \left( \log(\sigma_t \sqrt{2 \pi}) - \frac{(d_i - \mu)^2}{2 \sigma_t^2} \right) + \log(f(\sigma_t)) \bigg)
+        \end{align*}
+    and accept $ \sigma_{t+1} $ with probability $ \alpha $
+
+    But why take $ \log $? Because, it helps with analytical precision, i.e. multiplying thousand of small values may case an underflow in the system's memory (situation where a number is so close to zero that it cannot be represented accurately within the given precision of the system's floating point representation.). $ \log $ is perfect solution because it transform multiplication to additions and small positive numbers into non-small negative numbers. 
+
+    Now, using \Cref{eq:prior} as \textbf{prior} , \Cref{eq:jumping for mh example2} as \textbf{jumping distribution}, \Cref{eq:2nd accept mh example2} as acceptance scam and $0.1$ to be initial state we use Metropolis-Hastings Algorithm. 
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{images/metropolis/example2-values.png}
+        \caption{Accepted values from Metropolis-Hastings Algorithm}
+        \label{fig:example2 values}
+    \end{figure}
+
+    After running 100000 iteration we only accepted 817 values and values are looks like \Cref{fig:example2 values}. Here we can see we have to throw Burn-Ins (first 25\% sample). After removing Burn-Ins we get our desire samples to estimate $ \sigma $. 
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{images/metropolis/example2-values-after-burnin.png}
+        \caption{Accepted values after removing Burn-Ins}
+    \end{figure}
+
+    From this we get our desire values of $ \sigma $ to be 3.0032 and variance of the samples to be 0.0001. Because of low variance to simulated data we conform that it is very good estimate.
+
+    As a matter of fact I have taken observed values from $ N(10,9) $ distribution. So, we see the algorithm is very accurate to finding the means.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/metropolis/example2-original-with-simulated.png}
+        \caption{Original population with simulated samples}
+    \end{figure}
+
+\end{example}
+
+
 
 
 
