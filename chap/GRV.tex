@@ -49,8 +49,8 @@ Since, for $0<a<b<1, P(a\le U<b) = b-a$, we have,
 So, $X$ has the desired distribution.
 
 \begin{example}[Bernoulli Distribution]
-	Let, $X\sim Ber(p)$ where p is success probability  i.e.  $P(X=0)= 1-p$ and  $P(X=1)=p$ and $0\le p \le 1$.
-	Then, to generate $X$ we first generate $U \sim U[0,1]$ then, we set
+    Let, $X\sim \text{Ber}(p)$ where p is success probability  i.e.  $P(X=0)= 1-p$ and  $P(X=1)=p$ and $0\le p \le 1$.
+    Then, to generate $X$ we first generate $U \sim \text{U}[0,1]$ then, we set
 
 	\[
 		X=
@@ -61,7 +61,7 @@ So, $X$ has the desired distribution.
 	\]
 	Hence, $X$ follows Bernoulli Distribution with the parameter $p$.\\
 	\textbf{Algorithm for Inverse Transform Algorithm for Generating Bernoulli Distribution:}\\
-	STEP 1: Generate a random variable $U\sim U[0,1]$.\\
+    STEP 1: Generate a random variable $U\sim \text{U}[0,1]$.\\
 	STEP 2: If $U\le p$ set $X=1$ or set  $X=0$. \\
 	STEP 3: Go to  STEP 1.
 
@@ -73,12 +73,12 @@ So, $X$ has the desired distribution.
 \end{example}
 
 \begin{example}[Binomial Distribution]
-	Let, $X\sim Bin(n,p)$ then,  $X$ has probability mass function
+    Let, $X\sim \text{Bin}(n,p)$ then,  $X$ has probability mass function
 	\[
 		f(r) = P(X=r) = {n\choose r}p^{r}(1-p)^{n-r},\  i = 1,2, \ldots
 	\]
-	The generation of $X\sim Bin(n,p)$ by Inverse Transform Algorithm can be tedious. We can use the relation between Binomial and Bernoulli distribution.
-	If $x_i \sim Ber(p), \forall i = 1,2, \ldots, n$ then, $\sum_{i=1}^{n} x_i\sim Bin(n,p)$.
+    The generation of $X\sim \text{Bin}(n,p)$ by Inverse Transform Algorithm can be tedious. We can use the relation between Binomial and Bernoulli distribution.
+    If $x_i \sim \text{Ber}(p), \forall i = 1,2, \ldots, n$ then, $\sum_{i=1}^{n} x_i\sim \text{Bin}(n,p)$.
 
 	Hence, by generating $x_i$ $n$ independent random variable from Bernoulli distribution and summing them we get binomial distribution
 	\begin{figure}[H]
@@ -111,16 +111,16 @@ To generate Continuous random variables The Inverse Transform Algorithm is very 
 	\begin{align*}
 		F_X(x) & = P\left(F\left(F^{-1}(U)\right)\le F(x)\right) \\
 		       & = P(U\le F(x))                                  \\
-		       & = F(x) \text{ since $U\sim U(0,1)$ }
+               & = F(x) \text{ since $U\sim \text{U}(0,1)$ }
 	\end{align*}
 \end{proof}
 
-The above theory tells us we can generate a random variable $X$ from the continuous distribution function  $F$ by generating a random number $U\sim U(0,1)$
+The above theory tells us we can generate a random variable $X$ from the continuous distribution function  $F$ by generating a random number $U\sim \text{U}(0,1)$
 and setting $X=F^{-1}(U)$.
 
 \begin{example}[Exponential Distribution]
 	\label{exponential distribution}
-	Suppose we want to generate a random variable $x\sim Exp(\lambda)$, then its probability density function is
+    Suppose we want to generate a random variable $x\sim \text{Exp}(\lambda)$, then its probability density function is
 	\[
 		f(x) = \lambda e^{-\lambda x}.
 	\]
@@ -139,7 +139,7 @@ and setting $X=F^{-1}(U)$.
 	\[
 		X = F^{-1}(U) = -\frac{\ln(1-U)}{\lambda}.
 	\]
-	We see that if $U\sim U(0,1)$ then also $1-U\sim U(0,1)$ thus  $\ln(1-U)$ has the same distribution as  $\ln(U)$ so,
+    We see that if $U\sim \text{U}(0,1)$ then also $1-U\sim \text{U}(0,1)$ thus  $\ln(1-U)$ has the same distribution as  $\ln(U)$ so,
 	\[
 		X = F^{-1}(U) = -\frac{\ln(U)}{\lambda}.
 	\]
@@ -148,16 +148,16 @@ and setting $X=F^{-1}(U)$.
 
 		\centering
 		\includegraphics[width=0.6\textwidth]{images/exp_ITA.png}
-		\caption{Inverse Transform method for generating $Exp(2)$}
+        \caption{Inverse Transform method for generating $\text{Exp}(2)$}
 	\end{figure}
 \end{example}
 \begin{example}[Gamma Distribution]
-	Let $X\sim G(n,\lambda)$ Then, its probability  mass function is given by,
+    Let $X\sim \text{G}(n,\lambda)$ Then, its probability  mass function is given by,
 	\[
 		f(x) = \frac{1}{\Gamma(n)}\lambda^{n}x^{n-1}e^{-\lambda x}
 	\]
 
-	We know if $X_i\sim Exp(\lambda) \forall i = 1,2, \ldots ,n$ then  $Y=\sum_i X_i \sim G(n,\lambda)$. As,
+    We know if $X_i\sim \text{Exp}(\lambda) \forall i = 1,2, \ldots ,n$ then  $Y=\sum_i X_i \sim \text{G}(n,\lambda)$. As,
 
 	\begin{align*}
 		M_{Y}(t) = E \left[ e^{tY} \right] = E\left[ e^{\sum_{i=1}^{n} X_it  }\right] & = E\left[ \prod_{i=1}^{n} e^{X_it} \right]                                                \\
@@ -165,13 +165,13 @@ and setting $X=F^{-1}(U)$.
 		                                                                              & = \prod_{i=1}^{n}\frac{\lambda}{\lambda-t} = \left( \frac{\lambda}{\lambda-t} \right)^{n}
 	\end{align*}
 
-	Then, Generating  $n$ number of $X_i\sim Exp(\lambda)$
+    Then, Generating  $n$ number of $X_i\sim \text{Exp}(\lambda)$
 	and summing them we can easily generate a random variable which follows gamma distribution
 	\begin{figure}[H]
 
 		\centering
 		\includegraphics[width=0.6\textwidth]{images/gamma_ITA.png}
-		\caption{$G(10,5)$ generated by summing of $Exp(5)$}
+        \caption{$\text{G}(10,5)$ generated by summing of $\text{Exp}(5)$}
 	\end{figure}
 \end{example}
 
@@ -186,13 +186,13 @@ the accept–reject method. The density $g(x)$ is called the envelope density.
 The method proceeds as follows, \\
 STEP 1: Find a density $g$ and a finite constant  $c$ such that  $\frac{f(x)}{g(x)}\le c \ \forall x$.\\
 STEP 2: Generate $X\sim g$.\\
-STEP 3: Generate  $U\sim U(0,1)$, independent of  $X$. \\
+STEP 3: Generate  $U\sim \text{U}(0,1)$, independent of  $X$. \\
 STEP 4: Retain this generated value  $X$ if  $U\le \frac{f(x)}{cg(x)}$.\\
 STEP 5: Repeat the same until the required number of $n$ values of  $X$ has been obtained.\\
 
 The following theorem supports the method.
 \begin{theorem}
-	Let $X\sim g$, and  $U$, independent of, be a distributed as $U[0,1]$. Then the conditional density of $X$ given that
+    Let $X\sim g$, and  $U$, independent of, be a distributed as $ \text{U}[0,1]$. Then the conditional density of $X$ given that
 	$U\le \frac{f(X)}{cg(X)}$ is $f$.
 \end{theorem}
 \begin{proof}
@@ -206,7 +206,7 @@ The following theorem supports the method.
 
 \begin{example}[Generating a Normal Random Variable]
 	\label{generate normal}
-	To generate a standard normal variable $Z$ i.e. $Z\sim N(0,1)$, note first that the absolute value of  $Z$ has probability density function
+    To generate a standard normal variable $Z$ i.e. $Z\sim \text{N}(0,1)$, note first that the absolute value of  $Z$ has probability density function
 	\begin{equation}
 		\label{abs std normal}
 		f(x) = \frac{2}{\sqrt{2\pi}}e^{- \frac{x^{2}}{2}} \ 0\le x \le \infty.
@@ -228,20 +228,20 @@ The following theorem supports the method.
 		\frac{f(x)}{cg(x)} = \exp\left( x-\frac{x^2}{2}-\frac{1}{2} \right) = \exp\left( \frac{-(x-1)^2}{2} \right)
 	\]
 	Then, its follows that we can generate the absolute value of a standard normal random variable as follows: \\
-	STEP 1: Generate $X\sim Exp(1)$. \\
-	STEP 2: Generate $U\sim U(0,1)$, independent of $X$.\\
+    STEP 1: Generate $X\sim \text{Exp}(1)$. \\
+    STEP 2: Generate $U\sim \text{U}(0,1)$, independent of $X$.\\
 	STEP 3: If  $U\le \exp\left( -(X-1)^2 /2 \right)$, retain  $X$, Otherwise, return to Step 1.\\
 
 	Once, we have simulated a random variable $X$ having density function as in
 	\Cref{abs std normal} we can obtain a standard normal $Z$ by letting
 	$Z$ be equally likely to be either  $X$ or  $-X$.
 	In Step 3, the value $X$ is accepted if  $U\le \exp\left( -(X-1)^2 /2 \right)$, which is equivalent to $- \ln U\ge (X-1)^2 /2$.
-	However, in \Cref{exponential distribution} we have seen that $-\ln{U}\sim Exp(1)$ When $U\sim U(0,1)$.
+    However, in \Cref{exponential distribution} we have seen that $-\ln{U}\sim \text{Exp}(1)$ When $U\sim \text{U}(0,1)$.
 
 	So, summing up, we can generate the standard normal random variable $Z$ as follows:\\
-	STEP 1: Generate independent $X_1, X_2\sim Exp(1) $\\
+    STEP 1: Generate independent $X_1, X_2\sim \text{Exp}(1) $\\
 	STEP 2: If $X_2\ge (X_1-1)^2 /2$ retain $X_1$. Otherwise, return to Step 1.\\
-	STEP 3: Generate $U\sim U(0,1)$ and set,
+    STEP 3: Generate $U\sim \text{U}(0,1)$ and set,
 	\begin{eqnarray*}
 		Z=
 		\begin{cases}
@@ -254,7 +254,7 @@ The following theorem supports the method.
 
 		\centering
 		\includegraphics[width=0.6\textwidth]{images/nor_AR.png}
-		\caption{Generating $N(0,1)$ with Accept - Reject method}
+        \caption{Generating $\text{N}(0,1)$ with Accept - Reject method}
 	\end{figure}
 
 	If we want to generate normal random variable to have mean $\mu$  and variance $\sigma^2 $, just take $\mu +\sigma Z $.
@@ -263,8 +263,8 @@ The following theorem supports the method.
 \begin{example}[Generating Beta Distribution]
 	\label{generate beta}
 	If $\alpha$ and  $\beta $ are both getter then 1, then Beta density is uniformly bounded and its maximum attain at
-	$\frac{\alpha-1}{\alpha+\beta-2}$. As a result the $U[0,1]$ density can be served as an envelope density for generating such Beta distribution by using accept-reject method.
-	Precisely, generate $U$, $X\sim U[0,1]$ (independently), and retain the value if
+    $\frac{\alpha-1}{\alpha+\beta-2}$. As a result the $\text{U}[0,1]$ density can be served as an envelope density for generating such Beta distribution by using accept-reject method.
+    Precisely, generate $U$, $X\sim \text{U}[0,1]$ (independently), and retain the value if
 	$U\le \frac{f(X)}{\sup_x f(X)}$, where,
 	\[
 		f(X)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1} (1-x)^{\beta-1}, 0 < x< 1.
@@ -274,7 +274,7 @@ The following theorem supports the method.
 		\sup_x f(X) = f\left( \frac{\alpha-1}{\alpha+\beta-2} \right) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\frac{(\alpha-1)^{\alpha-1} (\beta-1)^{\beta-1} }{(\alpha+\beta-2)^{\alpha+\beta-2} }
 	\]
 	The algorithm finally works out as follows:\\
-	STEP 1: Generate independent $U,X \sim U[0,1]$.\\
+    STEP 1: Generate independent $U,X \sim \text{U}[0,1]$.\\
 	STEP 2: Retain the value $X$ if,
 	\[
 		U \le \frac{X^{\alpha-1} (1-X)^{\beta -1} (\alpha+\beta-2)^{\alpha+\beta-2} }{(\alpha-1)^{\alpha-1} (\beta-1)^{\beta-1} }.
@@ -305,7 +305,7 @@ This can be achieved by choosing $c$ to be smallest possible number, described i
 	, obviously $1/c$ is maximized by choosing $c=\sup_x\frac{f(x)}{g(x)}.$
 \end{proof}
 
-In the \Cref{generate normal} for $N(0,1)$ the acceptance rate is $\sqrt{\frac{\pi}{2 e}} = 0.7601$.
+In the \Cref{generate normal} for $\text{N}(0,1)$ the acceptance rate is $\sqrt{\frac{\pi}{2 e}} = 0.7601$.
 And in the \Cref{generate beta} for Beta(5,2) the acceptance rate is 0.4069
 
 \subsection{Bivariate Techniques}
@@ -345,11 +345,11 @@ Then, replacing the value of $ x = \sqrt{d}\sin(\theta)  $ and $ y=\sqrt{d}\cos(
 	g(d,\theta) = \frac{1}{2}\frac{1}{2\pi} e^{-d/2},\ \ \ 0< d<\infty, 0<\theta<2 \pi.
 \end{equation}
 
-As $g(d,\theta)$ is equal to product of the product of $Exp(1/2)$ density and $U(0,2 \pi)$, it follows that,\\
-$R^{2}$ and $\Theta$ are independent, with $R^{2} \sim Exp(1/2)$ and $\Theta \sim U(0, 2 \pi)$ \\
+As $g(d,\theta)$ is equal to product of the product of $\text{Exp}(1/2)$ density and $\text{U}(0,2 \pi)$, it follows that,\\
+$R^{2}$ and $\Theta$ are independent, with $R^{2} \sim \text{Exp}(1/2)$ and $\Theta \sim \text{U}(0, 2 \pi)$ \\
 Hence to generate a pair of independent slandered normal random variables $X$ and $Y$ by generating $R^{2} $ and $\Theta$ in polar coordinates and then
 transform back to rectangular coordinates. Hence the algorithm is:\\
-STEP 1: Generate random number $U_1, U_2 \sim U(0,1)$.\\
+STEP 1: Generate random number $U_1, U_2 \sim \text{U}(0,1)$.\\
 STEP 2: $ R^{2} = - 2 \ln U_1 $ and $\Theta = 2 \pi U_2 $. \\
 STEP 3: Now let,
 \begin{align*}
@@ -362,7 +362,7 @@ The transformation given by \Cref{Box-muller1} and \Cref{Box-muller2} are known 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/nor_polar.png}
-	\caption{Generating independent $X, Y \sim N(0,1)$ with polar method}
+    \caption{Generating independent $X, Y \sim \text{N}(0,1)$ with polar method}
 	\label{normal polar}
 \end{figure}
 

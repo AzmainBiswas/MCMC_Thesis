@@ -26,7 +26,7 @@ and suppose we wanted to compute $I$ where
 	I = \int_{0}^{1} g(x) dx
 \]
 
-To compute the value of $I$, note that if $U\sim U[0,1]$ then we can express $I$ as
+To compute the value of $I$, note that if $U\sim \text{U}[0,1]$ then we can express $I$ as
 \[
 	I = E[g(U)]
 \]
@@ -75,7 +75,7 @@ Then, we can express $I$ as
 \[
 	I = E(g(U_1, U_2, \ldots U_n))
 \]
-where $U_1, U_2, \ldots U_n \sim U[0,1]$  Hence  if we generate $k$ independent sets, each consisting of $n$ independent $U[0,1]$
+where $U_1, U_2, \ldots U_n \sim \text{U}[0,1]$  Hence  if we generate $k$ independent sets, each consisting of $n$ independent $\text{U}[0,1]$
 random variable
 \begin{align*}
 	U_1^{1}   & \ldots U_n^{1}  \\
@@ -96,14 +96,14 @@ random variable with mean $I$, we can estimate $I$ by $\sum_{i = 1}^{k}g(U_1^{i}
 	\[
 		I = E(e^{-\frac{U ^{2}}{2}})
 	\]
-	where, $U\sim U[0,1]$. Then simulating a large number of $U_1, U_2, \ldots, U_n\sim U[0,1]$ and calculating,
+    where, $U\sim \text{U}[0,1]$. Then simulating a large number of $U_1, U_2, \ldots, U_n\sim \text{U}[0,1]$ and calculating,
 	\[
 		\sum_{i = 1}^{n}  \frac{e^{-\frac{U_i ^{2}}{2}}}{n}
 	\]
 	we can evaluate $I$.
 
 	Hence the algorithm is:\\
-	STEP 1: Generate $U\sim U[0,1]$. \\
+    STEP 1: Generate $U\sim \text{U}[0,1]$. \\
 	STEP 2: Calculate $ e^{-\frac{U ^{2}}{2}} $ and retain it. goto STEP 1. \\
 	STEP 3: After large number of iteration evaluate the average.
 	\begin{table}[H]
@@ -168,7 +168,7 @@ Now, if $X$ and $Y$ were independent and both were uniformly distributed over $(
 \end{align*}
 
 Since, the density function of $(X,Y)$ is constant in the square, it thus follows that $(X,Y)$ is uniformly distributed in the square.
-Now, if $U\sim U[0,1]$ then $2U\sim U[0,2]$ and so $2U-1\sim U[-1,1]$. Therefore, if we generate ranom numbers $U_1 \text{ and }  U_2$
+Now, if $U\sim \text{U}[0,1]$ then $2U\sim \text{U}[0,2]$ and so $2U-1\sim \text{U}[-1,1]$. Therefore, if we generate random numbers $U_1 \text{ and }  U_2$
 and set $X=2U_1 - 1$ and $Y= 2U_2-1$, and define,
 \[
 	I = \begin{cases}
@@ -182,7 +182,7 @@ Then,
 \]
 Hence the Algorithm for estimating $\pi$ is:\\
 STEP 1: Set Circle = 1. \\
-STEP 2: Generate $U_1, U_2\sim U[0,1]$\\
+STEP 2: Generate $U_1, U_2\sim \text{U}[0,1]$\\
 STEP 3: If $(2U_1-1)^{2}+ (2U_2-1)^{2} \le 1$ Set Circle = Circle + 1, Otherwise return to STEP 2.
 STEP 4: After simulating $N$ time, set $\text{Area of Circle}  = \text{Circle}  / N$
 

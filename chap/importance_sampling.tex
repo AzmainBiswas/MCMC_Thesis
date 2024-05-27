@@ -49,11 +49,11 @@ We can visualize this method by an example.
 		\label{hx with U}
 		I & = \int_{0}^{10} \phi(x) dx                                                                                                            \\
 		  & = \int_{0}^{10} \phi(x)\frac{10}{10} dx                                                                                               \\
-		  & = \int_{0}^{10} 10 \times \phi(x) \frac{1}{10} dx = \int_{0}^{10} 10\phi(x) f_0(x) dx \text{ where } f_0(x)\text{ pdf of }U(0,1) \numberthis \\
-		  & = E_U[10 \times \phi(U)] \text{ where, }  U\sim U(0,10).
+          & = \int_{0}^{10} 10 \times \phi(x) \frac{1}{10} dx = \int_{0}^{10} 10\phi(x) f_0(x) dx \text{ where } f_0(x)\text{ pdf of }\text{U}(0,1) \numberthis \\
+          & = E_U[10 \times \phi(U)] \text{ where, }  U\sim \text{U}(0,10).
 	\end{align*}
 
-	By Ordinary Monte Carlo technique we can estimate $I$ by $\frac{1}{N}\sum_{i = 1}^{N} 10 \times \phi(U_i)$ where $U_i\sim U(0,10)$ for $i=1,2,\ldots,N$
+    By Ordinary Monte Carlo technique we can estimate $I$ by $\frac{1}{N}\sum_{i = 1}^{N} 10 \times \phi(U_i)$ where $U_i\sim \text{U}(0,10)$ for $i=1,2,\ldots,N$
 	for the large number of $N$.
 	\begin{figure}[H]
 		\centering
@@ -81,26 +81,26 @@ We can visualize this method by an example.
 	Here we can see that for sample size 1M, we get a pretty good estimation of $I$ with less then $0.6\%$ error. But the variance is very high.
 	If we see at left of \Cref{fig:hxwithU01andN01} we can see we are taking unnecessary value from low frequency part of $\phi(x)$ that is,
 	from extreme left and right. If we choose an importance sampling distribution that has similar curve as $\phi(x)$, then we can estimate $I$ with low variance.
-	If we choose importance sampling distribution as $N(5,1)$ then we see from right of \Cref{fig:hxwithU01andN01} it has similar pattern as $\phi(x)$.
+    If we choose importance sampling distribution as $\text{N}(5,1)$ then we see from right of \Cref{fig:hxwithU01andN01} it has similar pattern as $\phi(x)$.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\textwidth]{h(x)_with_normal_and_uniform.png}
-		\caption{$h(x)$ with $U(0,10)$ and $N(5,1)$}
+        \caption{$h(x)$ with $U(0,10)$ and $\text{N}(5,1)$}
 		\label{fig:hxwithU01andN01}
 	\end{figure}
 
-	Let, $f_1(x)$ is pdf of $N(0,1)$ then, from \Cref{hx with U}
+    Let, $f_1(x)$ is pdf of $\text{N}(0,1)$ then, from \Cref{hx with U}
 	\begin{align*}
 		I & = \int_{0}^{10} 10\phi(x) f_0(x) dx                                            \\
 		  & = \int_{0}^{10} 10 \phi(x) \frac{f_0(x)}{f_1(x)} q(x)dx                          \\
-		  & = E_X\left[ 10 \phi(X) \frac{f_0(X)}{f_1(X)} \right] \text{ where } X\sim N(5,1) \\
-		  & = E_X\left[ 10 \phi(X) \lambda(X) \right]\text{ where } X\sim N(5,1)
+          & = E_X\left[ 10 \phi(X) \frac{f_0(X)}{f_1(X)} \right] \text{ where } X\sim \text{N}(5,1) \\
+          & = E_X\left[ 10 \phi(X) \lambda(X) \right]\text{ where } X\sim \text{N}(5,1)
 	\end{align*}
-	Where, $\lambda(x) = \frac{f_0(x)}{f_1(x)}$ here $f_0(x)$ is pdf of $U(0,1)$ and $f_1(x)$ is pdf of $N(5,1)$. Now using usual Monte Carlo estimate
+    Where, $\lambda(x) = \frac{f_0(x)}{f_1(x)}$ here $f_0(x)$ is pdf of $U(0,1)$ and $f_1(x)$ is pdf of $\text{N}(5,1)$. Now using usual Monte Carlo estimate
 	\[
 		I = \frac{1}{N} \sum_{i = 1}^{N} 10 \phi(X_i) \lambda(X_i)
 	\]
-	where $X_1, X_2,\ldots,X_N$ is Monte Carlo sample from $N(5,1)$.
+    where $X_1, X_2,\ldots,X_N$ is Monte Carlo sample from $\text{N}(5,1)$.
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{l c c}
@@ -185,7 +185,7 @@ The basic plug-in estimate for $\mu$ is the so-called ratio estimate
 	\[
 		\phi(p)=p, \ h_0(p) = p^{x} (1-p)^{m-x} \sin ^{2}(\pi p),\ h_1(p) = p^{x}(1-p)^{m-x},
 	\]
-	so that if $p_1,p_2,\ldots,p_n$ are samples from $F_1$, (i.e. $p_i\sim Beta(x+1, m-x+1)$),
+    so that if $p_1,p_2,\ldots,p_n$ are samples from $F_1$, (i.e. $p_i\sim \text{Beta}(x+1, m-x+1)$),
 	then the importance sampling estimate of the posterior mean $\mu$ is
 	\begin{align*}
 		\hat{\mu} & = \frac{\sum_{i=1}^{n}\frac{\phi(p_i)h_0(p_i)}{h_1(p_i)} }{\sum_{i=1}^{n}\frac{h_0(p_i)}{h_1(p_i)} } \\

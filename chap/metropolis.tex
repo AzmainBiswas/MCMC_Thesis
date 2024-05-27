@@ -166,7 +166,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 
     Here, we choose,
     \[
-        q(\theta_{t-1}, \theta_{t}) = q(\theta_t|\theta_{t-1}) \sim N(\theta_{t-1},\sigma^2)
+        q(\theta_{t-1}, \theta_{t}) = q(\theta_t|\theta_{t-1}) \sim \text{N}(\theta_{t-1},\sigma^2)
     \]
     for some stander deviation $ \sigma $ that we have to select.
     Then,
@@ -283,7 +283,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
         \centering
         \begin{tabular}{|c|p{2cm}|c|c|c|p{2cm}|p{2cm}|p{2cm}|}
             \hline
-            Case & Initial State & $\sigma$ & Mean & Variance & Mean after Burn-In & Variance after Burn-In & Geweke z-test \\ \hline
+            Case & Initial State & $\sigma$ & Mean & Variance & Mean after Burn-In & Variance after Burn-In & Geweke z-score \\ \hline
             1 & 0 & 2 & 0.1866 & 0.4754 & 0.1900 & 0.4751 & 0.0057 \\ \hline
             2 & -1 & 2 & 0.1832 & 0.4641 & 0.17842 & 0.4718 & 0.0111 \\ \hline
             3 & -4 & 1 & 0.1906 & 0.4686 & 0.1695 & 0.4686 & - 0.0079 \\ \hline
@@ -367,7 +367,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 
     We take \textbf{jumping distribution}  to be,
     \[
-        q(\sigma_{t+1}|\sigma_{t}) = N(\sigma_t,1) \label{eq:jumping for mh example2} \numberthis
+        q(\sigma_{t+1}|\sigma_{t}) = \text{N}(\sigma_t,1) \label{eq:jumping for mh example2} \numberthis
     \]
     Now, for acceptance probability,
     we accept $ \sigma_{t+1} $ if,
@@ -413,7 +413,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 
     From this we get our desire values of $ \sigma $ to be 3.0032 and variance of the samples to be 0.0001. Because of low variance to simulated data we conform that it is very good estimate.
 
-    As a matter of fact I have taken observed values from $ N(10,9) $ distribution. So, we see the algorithm is very accurate to finding the means.
+    As a matter of fact I have taken observed values from $ \text{N}(10,9) $ distribution. So, we see the algorithm is very accurate to finding the means.
 
     \begin{figure}[H]
         \centering
