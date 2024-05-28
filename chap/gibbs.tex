@@ -197,5 +197,111 @@ Now, we see some examples how to use Gibbs sampler.
 
 \end{example}
 
+\begin{example}[Finding distribution of some observed data]
+    In the \Cref{eg:finding parameter} we have done a little cheating, here we did not find the mean($\mu$) in proper way, we assume the mean from the given observation, but this is not the proper way.  In this example we try to fix our mistake. 
+
+    Now, from \textbf{Bayesian Method} we have
+    \begin{equation}
+        \label{eq:proper bayesian formula}
+        f\left(\mu, \sigma^2|d^{n} \right) \propto f\left( d^{n} |\mu,\sigma^2 \right) f\left( \mu,\sigma^2 \right)
+    \end{equation}
+
+    The \textbf{likelihood function},
+    \begin{align*}
+        f\left( d^{n} |\mu,\sigma^2 \right) &= \prod_{i=1}^{n} \left( \frac{1}{\sqrt{2 \pi \sigma^2 }} \exp \left( - \frac{ (d_i - \mu)^2 }{ 2 \sigma^2 } \right) \right) \\ 
+                                            &= \frac{ 1 }{ \left( 2 \pi \sigma^{2}  \right)^{\frac{n}{2}}  } \exp \left( - \frac{ \sum_{i = 1}^{n} \left( d_i - \mu \right)^{2}   }{ 2 \sigma^2 } \right) \numberthis \label{eq:likelihood function}
+    \end{align*}
+    
+    Then \Cref{eq:proper bayesian formula} becomes, 
+    \begin{equation}
+         \label{eq:full equatation of proper bayesian formula}
+         f(\mu,\sigma^{2} |d^{n} ) \propto \frac{ 1 }{ \left( 2 \pi \sigma^{2}  \right)^{\frac{n}{2}}  } \exp \left( - \frac{ \sum_{i = 1}^{n} \left( d_i - \mu \right)^{2}   }{ 2 \sigma^2 } \right) f(\mu,\sigma^2)
+     \end{equation}
+
+     Then, the question become how do we choose the \textbf{prior} in this case. We can consider the two possibilities,
+     \begin{enumerate}
+         \item We can define a joint prior distribution for $ \mu $ and $ \sigma^{2}  $, i.e. we can define $ f(\mu,\sigma^{2} ) $, but it will very hard to accomplish. 
+         \item Another way we can consider $ \mu $ and $ \sigma^{2}  $ to be independent. i.e., 
+             \[ f(\mu, \sigma^{2} ) = f_\mu(\mu)f_{\sigma^{2} } (\sigma^{2})  \] 
+             This is relatively easy to implement.
+     \end{enumerate}
+
+     Here if we take \fdefine{conjugate prior}{In Bayesian Inference, for a given likelihood function $ f(x|\theta) $, if the posterior distribution $ f(\theta|x) $ is in the same probability density family as the prior $ f(\theta) $, then the prior and posterior are called conjugate distributions with respect to that likelihood function and the prior is called a conjugate prior for the likelihood function $ f(x|\theta) $. } as our choice of prior it will be easy to sample from posterior distribution.
+
+     Now we have the conjugate prior for $ \mu $ for normal likelihood function is Normal distribution.
+     \begin{align*}
+         f_{\mu} (\mu) &\propto \tx{N}\left( \theta,\sigma_{\mu}^{2}  \right) \\
+                       &\propto \frac{ 1 }{ \sqrt{2 \pi \sigma_{\mu} ^{2} } } \exp \left( - \frac{ (\mu - \theta)^{2} }{ 2 \sigma_{\mu} ^{2}  } \right)
+     \end{align*}
+     Where, $ \theta $ and $ \sigma_{\mu}^{2} $ are \textbf{hyperparameters} of the prior distribution. 
+
+     And for $ \sigma^2 $ we have two choices for conjugate prior for normal likelihood function.
+     \begin{enumerate}
+         \item One is Inverse-gamma distribution.
+             \begin{align*}
+                 f_{\sigma^2}(\sigma ^{2}) &\propto \tx{Inv-Gamma}(\alpha,\beta) \\
+                              &\propto \frac{ \beta^{\alpha}  }{ \Gamma(\alpha) } \left( \frac{ 1 }{ \sigma^2 } \right)^{(\alpha+1)} \exp \left( - \frac{ \beta }{ \sigma ^{2}  } \right)
+             \end{align*}
+
+             with \textbf{hyperparameters} $ \alpha > 0 $, shape\footnote{shape parameters are those parameter those effect the shape of the distribution} parameter of $ f_{\sigma ^{2}}(\sigma ^{2})  $ and $ \beta > 0 $, scale \footnote{ In family of probability distribution there is such parameter $ s $(with other parameter $ \theta $) for which the CDF satisfies $F(x;s,\theta) = F(x/s;1,\theta)$ known as scale parameter} parameter of $ f_{\sigma ^{2}}(\sigma ^{2})  $
+
+        \item Another one is Scaled-Inverse-$\chi ^{2}$ distribution.
+            \begin{align*}
+                f_{\sigma ^{2} }(\sigma ^{2}) &\propto \tx{Scale-Inv-}\chi^2\left( \nu,\sigma ^{2}_0 \right)\\ 
+                                              &\propto \frac{ \left( \sigma_{0}^{2}\nu/2 \right)^{\nu/2}   }{ \Gamma(\nu/2) } \frac{ \exp\left( - \frac{ \nu \sigma_0 ^{2} }{ 2 \sigma ^{2} } \right) }{ \left( \sigma^2 \right)^{1+\nu/2}  }
+            \end{align*}
+            With hyperparameters $ \nu $ and $ \sigma_0 ^{2} $.
+     \end{enumerate}
+
+     Now, if we choose prior of $ \sigma ^{2} $ to be Inv-Gamma$(\alpha,\beta)$ and $ \mu $ to be N$(\theta,\sigma_{\mu}^{2} )$ \Cref{eq:full equatation of proper bayesian formula} becomes,
+
+    \begin{align*}
+        f(\mu,\sigma ^{2}|d ^{n} ) \propto &\frac{ 1 }{ \left( 2 \pi \sigma^{2}  \right)^{\frac{n}{2}}  } \exp \left( - \frac{ \sum_{i = 1}^{n} \left( d_i - \mu \right)^{2}   }{ 2 \sigma^2 } \right) \times \\
+        &\frac{ 1 }{ \sqrt{2 \pi \sigma_{\mu} ^{2} } } \exp \left( - \frac{ (\mu - \theta)^{2} }{ 2 \sigma_{\mu} ^{2}  } \right) \times \left( \frac{ 1 }{ \sigma^2 } \right)^{(\alpha+1)} \exp \left( - \frac{ \beta }{ \sigma ^{2}  } \right) \numberthis \label{eq:posterior imposible to calculate}
+    \end{align*}
+
+    For simulating \Cref{eq:posterior imposible to calculate} we will use Gibbs sampler. To use Gibbs sampler we have to find the full conditionals $ f(\mu|d^{n},\sigma^2 ) $ and $ f(\sigma^{2}|d^{n}, \mu) $.
+    
+    Now, 
+    \begin{align*}
+        f(\mu|d^{n},\sigma^{2} ) &\propto \exp \left( - \frac{ \sum_{i = 1}^{n}(d_i - \mu)^2  }{ 2 \sigma^{2} } \right) \times \exp \left( - \frac{ (\mu-\theta)^{2} }{ 2 \sigma_{\mu} ^{2} } \right) \\ 
+                                 &\propto \exp \left( - \frac{ 1 }{ 2 } \left( \frac{ \sum_{i = 1}^{n}(d_i - \mu)^2  }{ \sigma^{2} } + \frac{ (\mu-\theta)^{2} }{ \sigma_{\mu} ^{2} } \right) \right) \\ 
+                                 &\propto \exp \left( - \frac{ 1 }{ 2 } \left( \frac{ \sum_{i=1}^{n} d_i^{2} - 2 \mu \sum_{i=1}^{n} d_i + n \mu^{2} }{ \sigma^{2} } + \frac{ \mu^{2} - 2 \mu \theta + \theta^{2} }{ \sigma_\mu^{2} }  \right) \right) \\ 
+                                 &\propto \exp \left( - \frac{ 1 }{ 2 } \left( \frac{ \sigma_\mu^{2} \sum_{i=1}^{n} d_i^{2} - 2 \sigma_\mu^{2} \mu \sum_{i=1}^{n} d_i + \sigma_\mu^{2} n \mu^{2} + \sigma^{2}\mu^{2} - 2 \sigma^{2}\mu \theta + \sigma^{2}\theta^{2} }{ \sigma^{2}\sigma_\mu^{2} } \right) \right) \\
+                                 &\propto \exp \left( - \frac{ 1 }{ 2 }  \frac{ \left( n \sigma_{\mu}^{2} + \sigma^{2}  \right)\mu^{2} - 2 \mu \left( \sigma_{\mu}^{2}\sum_{i=1}^{n}d_i + \sigma^{2}\theta  \right)   }{ \sigma^{2}\sigma_{\mu} ^{2} } \right) \\
+                                 &\propto \exp \left( - \frac{ 1 }{ 2 } \frac{ \mu^{2} - 2 \mu \left( \frac{ \sigma_{\mu}^{2}\sum_{i=1}^{n} d_i + \sigma^{2}\theta  }{ n \sigma_{\mu}^{2} + \sigma^{2}  } \right) }{ \frac{ \sigma_{\mu}^{2}\sigma^{2} }{  n \sigma_{\mu}^{2} + \sigma^{2} } }  \right) \\
+                                 &\propto \exp \left( - \frac{ \left( \mu - \frac{ \sigma_{\mu}^{2}\sum_{i=1}^{n} d_i + \sigma^{2}\theta }{ n \sigma_{\mu}^{2}+\sigma^{2}  } \right)^{2} }{ 2 \left( \frac{ \sigma^{2}\sigma_{\mu}^{2}  }{  n \sigma_{\mu}^{2}+\sigma^{2} } \right) } \right) \\ 
+                                 &\propto \tx{N}\left( \frac{ \sigma_{\mu}^{2}\sum_{i=1}^{n} d_i + \sigma^{2}\theta  }{ n \sigma_{\mu}^{2} + \sigma^{2} }, \frac{ \sigma_{\mu}^{2}\sigma^{2}  }{ n \sigma_{\mu}^{2} + \sigma^{2} } \right)
+    \end{align*}
+    So, posterior of $ \mu $ is a normal distribution with,
+    \begin{align*}
+        \tx{mean }= \frac{ \sigma_{\mu}^{2}\sum_{i=1}^{n} d_i + \sigma^{2}\theta  }{ n \sigma_{\mu}^{2} + \sigma^{2} }\, \tx{ and  variance }= \frac{ \sigma_{\mu}^{2}\sigma^{2}  }{ n \sigma_{\mu}^{2} + \sigma^{2} }
+    \end{align*}
+
+    Now if we take Inv-Gamma as prior of $ \sigma^{2} $ we get,
+    \begin{align*}
+        f(\sigma^{2}|d^{n} \mu) &\propto \left(\frac{ 1 }{\sigma^{2}}\right)^{\frac{ n }{2}} \exp \left( - \frac{ \sum_{i=1}^{n} (d_i - \mu)^{2} }{ 2 \sigma^{2} } \right) 
+        \left( \frac{ 1 }{ \sigma^{2} }\right)^{\alpha+1}  \exp \left( - \frac{ \beta }{ \sigma^{2}  } \right) \\ 
+                                &\propto \left( \frac{ 1 }{ \sigma^{2} } \right)^{\alpha + \frac{ n }{ 2 } + 1} 
+                                \exp \left( - \frac{ 2\beta + \sum_{i=1}^{n} (d_i-\mu)^{2} }{ 2\sigma^{2} } \right) \\ 
+                                &\propto \left( \frac{ 1 }{ \sigma^{2} } \right)^{\alpha + \frac{ n }{ 2 } + 1}
+                                \exp \left( - \frac{ \beta + \frac{ \sum_{i=1}^{n} (d_i-\mu)^{2} }{ 2 } }{ \sigma^{2} } \right) \\ 
+                                &\propto \tx{Inv-Gamma}\left( \alpha + \frac{ n }{ 2 }, \beta + \frac{ \sum_{i=1}^{n} (d_i-\mu)^{2} }{ 2 } \right)
+    \end{align*}
+
+    And now if we take Scale-Inv-$ \chi^{2} $ as prior of $ \sigma^{2} $ we the posterior to be,
+    \begin{align*}
+        f(\sigma^{2}|d^{n} ,\mu) &\propto \left( \frac{ 1 }{ 2 \pi \sigma^{2} } \right)^{n/2} 
+        \exp \left( - \frac{ \sum_{i=1}^{n} (d_i - \mu)^{2} }{ 2 \sigma^{2} } \right) 
+        \left( \frac{ 1 }{ \sigma^{2} } \right)^{1+\frac{ \nu }{ 2 }}
+        \exp \left( - \frac{ \nu \sigma_0^{2} }{ 2 \sigma^{2} } \right) \\ 
+                                 &\propto \left( \frac{ 1 }{ \sigma^{2} } \right)^{1+\frac{ \nu+ n }{ 2 }} 
+        \exp \left( - \frac{ \sum_{i=1}^{n}(d_i-\mu)^{2} + \nu \sigma_0^{2}  }{ 2 \sigma^{2} } \right) \\ 
+                                 &\propto \left( \frac{ 1 }{ \sigma^{2} } \right)^{1+\frac{ \nu+ n }{ 2 }} 
+                                 \exp \left( - \frac{ (\nu + n) \frac{ \sum_{i=1}^{n}(d_i-\mu)^{2} + \nu \sigma_0^{2} }{ \nu + n } }{ 2 \sigma^{2} } \right) \\ 
+                                 &\propto \tx{Scale-Inv-}\chi^{2}\left( \nu + n, \frac{ \sum_{i=1}^{n}(d_i-\mu)^{2} + \nu \sigma_0^{2} }{ \nu + n } \right)
+    \end{align*}
+
+ \end{example}
 
 
