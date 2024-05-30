@@ -137,9 +137,9 @@ A value larger than 2 indicates that the mean of
 the series is still drifting, and a longer burn-in is required before monitoring the
 chain (to extract a sampler) can begin. Formula for Geweke z-score is given by,
 \[
-    z = \frac{\Bar{X_1} - \Bar{X_2}}{\sqrt{ \text{Var}(X_1) + \text{Var}(X_2) }}
+    z = \frac{\Bar{X_1} - \Bar{X_2}}{\sqrt{ \frac{ 1 }{ n_1 }S^{X_1}_0 + \frac{ 1 }{ n_2 }S^{X_2}_0 }}
 \]
-Where, $ X_1 $ is the first 10\% subsamples and $ X_2 $ last 50\% subsamples.
+Where, $ X_1 $ is the first 10\% subsamples, $ X_2 $ last 50\% subsamples, $ S_0 $ is the spectral density at zero frequency and $ n_i $ are the number or samples in $ X_i $ for $ i = 1,2 $.
 
 \subsection{Examples}
 
@@ -159,7 +159,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
     \]
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{./images/metropolis/plot-of-px.png}
+        \includegraphics[width=0.7\textwidth]{./images/metropolis/example1/plot-of-px.png}
         \caption{Plot of original $p(x)$}
         \label{plot of px}
     \end{figure}
@@ -189,93 +189,93 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
     Now, using various initial state and different $ \sigma $ (stander deviation of jumping distribution) simulate samples and study them. 
 
     \textbf{Case 1:} First we choose $ 0 $ as initial state and $ \sigma = 2 $. Then after 100000 iteration we get mean of the samples to be 0.1866 and variance of the samples to be 0.4754. 
-        From \Cref{fig:MH sample 1 values} we can see that as we are starting from middle of our target distribution the simulated values are very good estimation of desire distribution $ p(x) $. Here we see we don't need burn-in time since from beginning the means of the sample are quite same. For the sake of tradition if we throw 25\% of samples and get 0.1900 as mean, 0.4751 as variance of the new samples and 0.0057 Geweke z-score. 
+        From \Cref{fig:MH sample 1 values} we can see that as we are starting from middle of our target distribution the simulated values are very good estimation of desire distribution $ p(x) $. Here we see we don't need burn-in time since from beginning the means of the sample are quite same. For the sake of tradition if we throw 25\% of samples and get 0.1900 as mean, 0.4751 as variance of the new samples and 0.3041 Geweke Z-score. 
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-1-values.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-1-values.png}
         \caption{Accepted values and running means for case 1 ( initial state 0, $ \sigma = 2 $ ) before removing burn-ins}
         \label{fig:MH sample 1 values}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-1-value-hist-bo.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-1-value-hist-bo.png}
         \caption{Samples of case 1 after removing Burn-Ins}
         \label{fig:MH sample 1 after burn-in}
     \end{figure}
 
-    \textbf{Case 2:}  Now we take -1 as initial state and $ \sigma $ to be 2, then we get mean and variance of the samples 0.1832 and 0.4641 respectively. After removing the Burn-Ins we get mean 0.17842, variance 0.47186 and Geweke z-score 0.0111.
+    \textbf{Case 2:}  Now we take -1 as initial state and $ \sigma $ to be 2, then we get mean and variance of the samples 0.1832 and 0.4641 respectively. After removing the Burn-Ins we get mean 0.17842, variance 0.47186 and Geweke Z-score 0.5433.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-2-values.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-2-values.png}
         \caption{Accepted values and running means for case 2 ( initial state -1, $ \sigma = 2 $ ) before burn-in removed}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-2-value-hist-bo.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-2-value-hist-bo.png}
         \caption{Samples of case 2 after removing Burn-Ins}
     \end{figure}
 
-    \textbf{Case 3:} As case 3 we take initial state to be -4 and $ \sigma = 1$, then we have mean = 0.1906, variance = 0.4686. From \Cref{fig:MH sample3} we can see for first few samples we get means to fluctuate heavily after that it is stable. So, here it is necessary to remove first few term (Burn-In). After removing first 25\% of term we get, mean = 0.1695, variance = 0.4686 and Geweke z-score = -0.0079. Hence seeing the Geweke z-score we see after Burn-Ins are removed we get good estimation of $ p(x) $ (\Cref{fig:MH sample3 after burn in}).
+    \textbf{Case 3:} As case 3 we take initial state to be -4 and $ \sigma = 1$, then we have mean = 0.1906, variance = 0.4686. From \Cref{fig:MH sample3} we can see for first few samples we get means to fluctuate heavily after that it is stable. So, here it is necessary to remove first few term (Burn-In). After removing first 25\% of term we get, mean = 0.1695, variance = 0.4686 and Geweke Z-score = -0.348. Hence seeing the Geweke z-score we see after Burn-Ins are removed we get good estimation of $ p(x) $ (\Cref{fig:MH sample3 after burn in}).
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-3-values.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-3-values.png}
         \caption{Accepted values and running means for case 3 ( initial state -4, $ \sigma = 1 $ ) before burn-in removed}
         \label{fig:MH sample3}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.9\textwidth]{./images/metropolis/sample-3-value-hist-bo.png}
+        \includegraphics[width=0.9\textwidth]{./images/metropolis/example1/sample-3-value-hist-bo.png}
         \caption{Samples of case 3 after removing Burn-Ins}
         \label{fig:MH sample3 after burn in}
     \end{figure}
 
-    \textbf{Case 4:} In this scenario, we start with an initial value far outside the desired distribution, specifically at 10, with a standard deviation of $\sigma = 2$. Observing \Cref{fig:MH sample4}, it becomes evident that removing some of the initial samples (known as Burn-Ins) is necessary. After discarding the first 25\% of the samples, we achieve a much better approximation of the target distribution. The results after this adjustment show a mean of 0.1695, a variance of 0.4686, and a Geweke z-score of -0.0095.
+    \textbf{Case 4:} In this scenario, we start with an initial value far outside the desired distribution, specifically at 10, with a standard deviation of $\sigma = 2$. Observing \Cref{fig:MH sample4}, it becomes evident that removing some of the initial samples (known as Burn-Ins) is necessary. After discarding the first 25\% of the samples, we achieve a much better approximation of the target distribution. The results after this adjustment show a mean of 0.1695, a variance of 0.4686, and a Geweke Z-score of -0.4693.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-4-values.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-4-values.png}
         \caption{Accepted values and running means for case 4 ( initial state 10, $ \sigma = 2 $ ) before burn-in removed}
         \label{fig:MH sample4}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-4-value-hist-bo.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-4-value-hist-bo.png}
         \caption{Samples of case 4 after removing Burn-Ins}
     \end{figure}
 
-    \textbf{Case 5:}  Now, let's examine some poor examples of the jumping distribution, using $\sigma = 0.025$ and an initial state of 10. Initially, the mean is 0.2626 and the variance of the sample is 1.4632. Although the mean is quite accurate, the high variance indicates a poor estimation, as confirmed by \Cref{fig:MH sample5}. It is crucial to remove the first 25\% of the samples. After discarding these initial samples, we obtain a mean of 0.0726 and a variance of 0.3740. With the reduced variance, this can be considered a good estimator.
+    \textbf{Case 5:}  Now, let's examine some poor examples of the jumping distribution, using $\sigma = 0.025$ and an initial state of 10. Initially, the mean is 0.2626 and the variance of the sample is 1.4632. Although the mean is quite accurate, the high variance and triable Geweke Z-score (1.152) indicates a poor estimation, as confirmed by \Cref{fig:MH sample5}. It is crucial to remove the first 25\% of the samples. After discarding these initial samples, we obtain a mean of 0.0726 and a variance of 0.3740. With the reduced variance, this can be considered a good estimator.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-5-values.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-5-values.png}
         \caption{Accepted values and running means for case 5 ( initial state 10, $ \sigma = 0.025 $ ) before burn-in removed}
         \label{fig:MH sample5}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-5-value-hist-bo.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-5-value-hist-bo.png}
         \caption{Samples of case 5 after removing Burn-Ins}
     \end{figure}
 
-    \textbf{Case 6:} Now we take $ \sigma $ to be 20 and initial state 15. After removing Burn-Ins we obtain mean of 0.1899 and variance of 0.4423. Here we can see not much candidates are getting accepted.
+    \textbf{Case 6:} Now we take $ \sigma $ to be 20 and initial state 15. After removing Burn-Ins we obtain mean of 0.1899, variance of 0.4423 and Geweke Z-score 3.301. Here we can see not much candidates are getting accepted and jugging from Geweke Z-score we can't accept this samples.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-6-values.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-6-values.png}
         \caption{Accepted values and running means for case 6 ( initial state 15, $ \sigma = 20 $ ) before burn-in removed}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{./images/metropolis/sample-6-value-hist-bo.png}
+        \includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-6-value-hist-bo.png}
         \caption{Samples of case 6 after removing Burn-Ins}
     \end{figure}
 
@@ -284,12 +284,12 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
         \begin{tabular}{|c|p{2cm}|c|c|c|p{2cm}|p{2cm}|p{2cm}|}
             \hline
             Case & Initial State & $\sigma$ & Mean & Variance & Mean after Burn-In & Variance after Burn-In & Geweke z-score \\ \hline
-            1 & 0 & 2 & 0.1866 & 0.4754 & 0.1900 & 0.4751 & 0.0057 \\ \hline
-            2 & -1 & 2 & 0.1832 & 0.4641 & 0.17842 & 0.4718 & 0.0111 \\ \hline
-            3 & -4 & 1 & 0.1906 & 0.4686 & 0.1695 & 0.4686 & - 0.0079 \\ \hline
-            4 & 10 & 2 & 0.1908 & 0.4707 & 0.1695 & 0.4686 & -0.0095 \\ \hline
-            5 & 10 & 0.025 & 0.2626 & 1.4632 & 0.0726 & 0.3740 & -0.7160 \\ \hline
-            6 & 15 & 20 & 0.1899 & 0.4423 & 0.1899 & 0.4423 & -0.0771 \\ \hline
+            1 & 0 & 2 & 0.1866 & 0.4754 & 0.1900 & 0.4751 & 0.3041 \\ \hline
+            2 & -1 & 2 & 0.1832 & 0.4641 & 0.17842 & 0.4718 & 0.5433 \\ \hline
+            3 & -4 & 1 & 0.1906 & 0.4686 & 0.1695 & 0.4686 & -0.348 \\ \hline
+            4 & 10 & 2 & 0.1908 & 0.4707 & 0.1695 & 0.4686 & -0.4693 \\ \hline
+            5 & 10 & 0.025 & 0.2626 & 1.4632 & 0.0726 & 0.3740 & 1.512 \\ \hline
+            6 & 15 & 20 & 0.1899 & 0.4423 & 0.1899 & 0.4423 & 3.301 \\ \hline
         \end{tabular}
         \caption{Summary of Cases with Initial States, $\sigma$, Means, Variances, and Geweke z-test}
     \end{table}
@@ -303,7 +303,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
     Another use case of Metropolis-Hastings Algorithm to find distribution of some observed data using \textbf{Bayesian Method}. Suppose we have 1000 observed samples. Now we want to find the distribution of the samples, i.e. from which distribution the samples is taken so we can generate more sample data from that distribution. Our observed data looks like \Cref{fig:observed sample} .
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{images/metropolis/example2-observation.png}
+        \includegraphics[width=0.6\textwidth]{images/metropolis/example2/observation.png}
         \caption{Observed Samples}
         \label{fig:observed sample}
     \end{figure}
@@ -399,7 +399,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{images/metropolis/example2-values.png}
+        \includegraphics[width=0.7\textwidth]{images/metropolis/example2/values.png}
         \caption{Accepted values from Metropolis-Hastings Algorithm}
         \label{fig:example2 values}
     \end{figure}
@@ -408,17 +408,17 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{images/metropolis/example2-values-after-burnin.png}
+        \includegraphics[width=1\textwidth]{images/metropolis/example2/values-after-burnin.png}
         \caption{Accepted values after removing Burn-Ins}
     \end{figure}
 
-    From this we get our desire values of $ \sigma $ to be 3.0032 and variance of the samples to be 0.0001. Because of low variance to simulated data we conform that it is very good estimate.
+    From this we get our desire values of $ \sigma $ to be 3.0032, variance of the samples to be 0.0001 and 0.05545 as Geweke Z-score. Because of low variance and Geweke Z-score less then 2 for simulated data we conform that it is very good estimate.
 
     As a matter of fact I have taken observed values from $ \text{N}(10,9) $ distribution. So, we see the algorithm is very accurate to finding the means.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.9\textwidth]{images/metropolis/example2-original-with-simulated.png}
+        \includegraphics[width=1\textwidth]{images/metropolis/example2/original-with-simulated.png}
         \caption{Original population with simulated samples}
     \end{figure}
 

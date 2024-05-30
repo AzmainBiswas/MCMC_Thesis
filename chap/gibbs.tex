@@ -67,7 +67,7 @@ Now, we see some examples how to use Gibbs sampler.
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{images/gibbs/ex1-con-plot.png}
+        \includegraphics[width=0.6\textwidth]{images/gibbs/example1/con-plot.png}
         \caption{Contour Plot of Bivariate Normal Distribution when $ \rho = 0.5 $}
     \end{figure}
 
@@ -108,15 +108,15 @@ Now, we see some examples how to use Gibbs sampler.
     \textbf{Initial State 1:} Here we are taking initial state to be $(-1,-1)$. 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.5\textwidth]{images/gibbs/ex1-init1.png}
+        \includegraphics[width=0.5\textwidth]{images/gibbs/example1/init1.png}
         \caption{Samples when initial state $(-1,-1)$}
     \end{figure}
 
-    \textbf{Initial State 2:} Now we consider $(0,0)$ (middle of density) as a initial state. 
+    \textbf{Initial State 2:} Now we consider $(0,0)$ (middle of the density) as a initial state. 
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.5\textwidth]{images/gibbs/ex1-init2.png}
+        \includegraphics[width=0.5\textwidth]{images/gibbs/example1/init2.png}
         \caption{Samples when initial state $(0,0)$}
     \end{figure}
 
@@ -125,14 +125,14 @@ Now, we see some examples how to use Gibbs sampler.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.5\textwidth]{images/gibbs/ex1-init3.png}
+        \includegraphics[width=0.5\textwidth]{images/gibbs/example1/init3.png}
         \caption{Samples when initial state $(-4,-4)$}
         \label{fig:gb ex1 sample 3}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{images/gibbs/ex1-marginal-distributions.png}
+        \includegraphics[width=1\textwidth]{images/gibbs/example1/marginal-distributions.png}
         \caption{Marginal distribution for $ X_1 $ and $ X_2 $ for different initial states}
     \end{figure}
 
@@ -190,7 +190,7 @@ Now, we see some examples how to use Gibbs sampler.
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{images/gibbs/ex2-beta-binomial.png}
+        \includegraphics[width=0.6\textwidth]{images/gibbs/example2/ex2-beta-binomial.png}
         \caption{Simulation of Beta-Binomial(10,7,2)}
         \label{fig:beta-binomial simulation}
     \end{figure}
@@ -301,6 +301,93 @@ Now, we see some examples how to use Gibbs sampler.
                                  \exp \left( - \frac{ (\nu + n) \frac{ \sum_{i=1}^{n}(d_i-\mu)^{2} + \nu \sigma_0^{2} }{ \nu + n } }{ 2 \sigma^{2} } \right) \\ 
                                  &\propto \tx{Scale-Inv-}\chi^{2}\left( \nu + n, \frac{ \sum_{i=1}^{n}(d_i-\mu)^{2} + \nu \sigma_0^{2} }{ \nu + n } \right)
     \end{align*}
+    
+    Then, the Gibbs sampler algorithm can be summarized as follows,
+
+    When we take Inv-Gamma$(\alpha,\beta)$ as prior of $ \sigma^{2} $,
+    \begin{enumerate}
+        \item Set an initial state $ \left( \mu^{(0)}, (\sigma^{2})^{(0)}\right)$. Were,
+            \begin{align*}
+                \mu^{(0)} &\sim \tx{N}(\theta,\sigma_{\mu}^{2}  ) \\ 
+                \left(\sigma^{2}\right)^{(0)} &\sim \tx{Inv-Gamma}(\alpha,\beta)  
+            \end{align*}
+        \item We obtain the next state $ \left( \mu^{(t+1)}, (\sigma^{2})^{(t+1)} \right) $ by the full conditionals,
+            \begin{align*}
+                \mu^{(t+1)} &\sim \tx{N}\left( \frac{ \sigma_{\mu}^{2}\sum_{i=1}^{n} d_i + (\sigma^{2})^{(t)} \theta  }{ n \sigma_{\mu}^{2} + (\sigma^{2})^{(t)}  }, \frac{ \sigma_{\mu}^{2}(\sigma^{2})^{(t)}   }{ n \sigma_{\mu}^{2} + (\sigma^{2})^{(t)}  } \right) \\ 
+                (\sigma^{2})^{(t+1)} &\sim \tx{Inv-Gamma}\left( \alpha + \frac{ n }{ 2 }, \beta + \frac{ \sum_{i=1}^{n} (d_i-(\mu)^{(t+1)} )^{2} }{ 2 } \right)
+            \end{align*}
+            \item Repeat step 2.
+    \end{enumerate}
+    Now, we know if $ X\sim \tx{Inv-Gamma}(\alpha,\beta) $ then $ \frac{ 1 }{ X } \sim \tx{Gamma}(\alpha,\beta)$. Therefore sampling from Inverse-gamma not not different.
+
+    %% images
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{images/gibbs/example3/inv-gamma-pre-burnin.png}
+        \caption{Accepted values of $ \mu $ and $ \sigma^{2} $ when prior of $ \sigma^{2} $ is Inv-Gamma$(\alpha,\beta)$}
+        \label{fig:inv-gamma pre burn-in}
+    \end{figure}
+    Now jugging form \Cref{fig:inv-gamma pre burn-in} we have to remove first few samples as Burn-In. So after removing burn-in we get $ \mu = 9.9230 $ and $ \sigma^{2}=9.0160 $ which is close to original.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{images/gibbs/example3/inv-gamma-post-burnin.png}
+        \caption{Accepted values of $ \mu $ and $ \sigma^{2} $ after removing Burn-In when prior of $ \sigma^{2} $ is Inv-Gamma$(\alpha,\beta)$}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{images/gibbs/example3/inv-gamma-scatter-post-burnin.png}
+        \caption{Scatter plot of $ \mu $ and $ \sigma^{2} $ together after removing Burn-In when prior of $ \sigma^{2} $ is Inv-Gamma$(\alpha,\beta)$}
+    \end{figure}
+    
+    Now if we take Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$ as prior of $ \sigma^{2} $, the algorithm become,
+    \begin{enumerate}
+        \item Set an initial state $ \left( \mu^{(0)}, (\sigma^{2})^{(0)}\right)$. Were,
+            \begin{align*}
+                \mu^{(0)} &\sim \tx{N}(\theta,\sigma_{\mu}^{2}  ), \\ 
+                \left(\sigma^{2}\right)^{(0)} &\sim \tx{Scale-Inv-}\chi^{2}(\nu,\sigma^{2}_0)  
+            \end{align*}
+        \item We obtain the next state $ \left( \mu^{(t+1)}, (\sigma^{2})^{(t+1)} \right) $ by the full conditionals,
+            \begin{align*}
+                \mu^{(t+1)} &\sim \tx{N}\left( \frac{ \sigma_{\mu}^{2}\sum_{i=1}^{n} d_i + (\sigma^{2})^{(t)} \theta  }{ n \sigma_{\mu}^{2} + (\sigma^{2})^{(t)}  }, \frac{ \sigma_{\mu}^{2}(\sigma^{2})^{(t)}   }{ n \sigma_{\mu}^{2} + (\sigma^{2})^{(t)}  } \right), \\ 
+                (\sigma^{2})^{(t+1)} &\sim \tx{Scale-Inv-}\chi^{2} \left( \nu+ n , \frac{ \sum_{i=1}^{n}(d_i-\mu^{(t+1)} )^{2} + \nu \sigma_0^{2} }{ \nu + n } \right)
+            \end{align*}
+            \item Repeat step 2.
+    \end{enumerate}
+    We know,
+    \begin{align*}
+        X &\sim \tx{Scale-Inv-}\chi^{2}\left( \nu, \sigma_0^{2} \right)\\ 
+        \frac{ X }{ \nu \sigma_0^{2} } &\sim \tx{Inv-}\chi^{2}(\nu) \\ 
+        \frac{ \nu \sigma_0^{2} }{ X } &\sim \chi^{2}(\nu) \\ 
+        \frac{ 1 }{ X } &\sim \frac{ 1 }{ \nu \sigma_0^{2} }\chi^{2}(\nu)
+    \end{align*}
+    So simulating Scale-Inv-$\chi^{2} $ is also easy.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{images/gibbs/example3/chi2-pre-burnin.png}
+        \caption{Accepted values of $ \mu $ and $ \sigma^{2} $ when prior of $ \sigma^{2} $ is Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$}
+        \label{fig:scale-inv-chi2 pre burn-in}
+    \end{figure}
+
+    Here also we remove first 25\% of term as Burn-In and then we get $ \mu $ to be 9.9230 and $ \sigma^{2} $ to be 9.0258.  
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{images/gibbs/example3/chi2-post-burnin.png}
+        \caption{Accepted values of $ \mu $ and $ \sigma^{2} $ after removing Burn-In when prior of $ \sigma^{2} $ is Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{images/gibbs/example3/chi2-scatter-post-burnin.png}
+        \caption{Scatter plot of $ \mu $ and $ \sigma^{2} $ together after removing Burn-In when prior of $ \sigma^{2} $ is Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{images/gibbs/example3/comparisum.png}
+        \caption{Comparison between original population and simulated population with different prior}
+    \end{figure}
 
  \end{example}
 
