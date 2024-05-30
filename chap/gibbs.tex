@@ -76,8 +76,8 @@ Now, we see some examples how to use Gibbs sampler.
     \begin{align*}
         f_{X_1|X_2}(x_1|x_2) &= \frac{f(x_1,x_2)}{f_{X_2}(X_2)} \\ 
                     &=C_1 f(x_1,x_2) \\
-                    &=C_2 \exp \left( - \frac{1}{2 \sqrt{1-\rho^2}} (x_1^2 - 2 \rho x_1x_2) \right) \\
-                    &= C_3 \exp \left(- \frac{1}{2 \sqrt{1-\rho^2}} (x_1 - \rho x_2)^2   \right)
+                    &=C_2 \exp \left( - \frac{1}{2 (1-\rho^2)} (x_1^2 - 2 \rho x_1x_2) \right) \\
+                    &= C_3 \exp \left(- \frac{1}{2 (1-\rho^2)} (x_1 - \rho x_2)^2   \right)
     \end{align*}
      Recognizing this equation as a normal density, we can conclude that, 
      \[ X_1|X_2 \sim \text{N}(\rho x_2, (1-\rho^2)) \]
@@ -86,8 +86,8 @@ Now, we see some examples how to use Gibbs sampler.
     \begin{align*}
         f_{X_2|X_1} (x_2|x_1) &= \frac{f(x_2,x_1)}{f_{X_1}(X_1)} \\ 
                     &=C_4 f(x_2,x_1) \\
-                    &=C_5 \exp \left( - \frac{1}{2 \sqrt{1-\rho^2}} (x_2^2 - 2 \rho x_1x_2) \right) \\
-                    &= C_6 \exp \left(- \frac{1}{2 \sqrt{1-\rho^2}} (x_2 - \rho x_1)^2   \right)
+                    &=C_5 \exp \left( - \frac{1}{2 (1-\rho^2)} (x_2^2 - 2 \rho x_1x_2) \right) \\
+                    &= C_6 \exp \left(- \frac{1}{2 (1-\rho^2)} (x_2 - \rho x_1)^2   \right)
     \end{align*}
     Here also we can see that,
     \[
