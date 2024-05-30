@@ -103,7 +103,7 @@ Now, we see some examples how to use Gibbs sampler.
                 x_2 ^{(t+1)} &\sim \text{N}\left(\rho x_1^{(t+1)}, (1-\rho^2) \right) 
             \end{align*}
     \end{enumerate}
-    New we choosing different initial state we study the outputs.
+    Now choosing different initial state we study the outputs.
 
     \textbf{Initial State 1:} Here we are taking initial state to be $(-1,-1)$. 
     \begin{figure}[H]
@@ -112,7 +112,7 @@ Now, we see some examples how to use Gibbs sampler.
         \caption{Samples when initial state $(-1,-1)$}
     \end{figure}
 
-    \textbf{Initial State 2:} Now we consider $(0,0)$ (middle of the density) as a initial state. 
+    \textbf{Initial State 2:} Now we consider $(0,0)$ (middle of the density) as an initial state. 
 
     \begin{figure}[H]
         \centering
@@ -120,7 +120,7 @@ Now, we see some examples how to use Gibbs sampler.
         \caption{Samples when initial state $(0,0)$}
     \end{figure}
 
-    \textbf{Initial State 3:} Here we take initial state way out side form middle of distribution consider $ (-4,-4) $ as initial state. We can see from \Cref{fig:gb ex1 sample 3} although we are taking initial state way outside but the samples are come out to be same as above samples. 
+    \textbf{Initial State 3:} Here we take initial state way outside form middle of distribution consider $ (-4,-4) $ as initial state. We can see from \Cref{fig:gb ex1 sample 3}, although we are taking initial state way outside, but the samples are come out to be same as above samples. 
 
 
     \begin{figure}[H]
@@ -182,7 +182,7 @@ Now, we see some examples how to use Gibbs sampler.
         \item Replete step 2.  
     \end{enumerate}
 
-    Now, taking $ n=10,\,\alpha=7,\,\beta=2 $ we simulate beta-binomial distribution and we get empirical mean 7.7797, variance 3.2788 which are close to theoretical mean($ \mu $) and variance($ \sigma^2 $).
+    Now, taking $ n=10,\,\alpha=7,\,\beta=2 $ we simulate beta-binomial distribution, and we get empirical mean 7.7797, variance 3.2788 which are close to theoretical mean($ \mu $) and variance($ \sigma^2 $).
     \begin{align*}
         \mu &= \frac{n \alpha}{\alpha+\beta} = \frac{10 \times 7 }{ 7 + 2} = 7.7777 \\
         \sigma^2 &= \frac{n \alpha \beta(\alpha+\beta+n)}{(\alpha+\beta)^2(\alpha+\beta+1)} = 3.2840
