@@ -43,25 +43,26 @@ such as,
 
 This project work focus mainly on these simulation techniques.
 
-In Chapter 2, we discuss about how to generate random variable both
+In Chapter 2, we discuss how to generate random variable both
 uniform and continuous, by using method like The Inverse Transform Method, 
 Accept-Reject Algorithm, Bivariate Techniques.
 
 In Chapter 3, we focus on Ordinary Monte Carlo and how to use it to solve problem like evaluating integration and evaluating the value of $\pi$.
-
-In Chapter 4, the focus shifts to Importance Sampling and how it beneficial
-from Ordinary Monte Carlo by some example. Learn about how to chose 
+Then, the focus shifts to Importance Sampling and how it is beneficial
+from Ordinary Monte Carlo by some example. Learn about how to choose 
 optimal Importance sample distribution.
+
+In Chapter 4, we know different Markov Chain Monte Carlo method like Metropolis-Hastings Algorithm and Gibbs Sampler and discuss how to observe sample is reached stationary. 
 
 \section{Mathematical Preliminaries}
 
 \begin{definition}[Probability Space]
-	A probability spacs is a triple $(\Omega, \mathcal{F}, P)$ consisting of:
+	A probability specs is a triple $(\Omega, \mathcal{F}, P)$ consisting of:
 	\begin{enumerate}
 		\item[(a)] the sample space $\Omega$ (an arbitrary non-empty set)
 		\item[(b)] a non-empty collection of subsets $\mathcal{F} $ of $ \Omega $,
 		      called \textit{sigma field} of subspace of $ \Omega $, 
-		      such taht,
+		      such that,
 		      \begin{itemize}
 			      \item[(i)] $ \Omega \in \mathcal{F} $
 			      \item[(ii)] if $ A \in \mathcal{F} $, then $ A^{c}\in \mathcal{F}  $
@@ -81,7 +82,7 @@ optimal Importance sample distribution.
 	Let $A$, $B$ be general events with respect to some sample space $ \Omega $,
 	and suppose $ P(A)>0 $. The \textit{conditional probability} of $ B $ given $ A $ is defined as 
 	\[
-		P(B|A) = \frac{P(A\cap B}{P(A)}.
+		P(B|A) = \frac{P(A\cap B)}{P(A)}.
 	\]
 \end{definition}
 
@@ -101,7 +102,7 @@ optimal Importance sample distribution.
 
 \begin{definition}[Cumulative Distribution Function]
 	The cumulative distribution function(CDF) or simply distributed function, $ F $ of 
-	a random variable $ X $ is define for any real number $ x $ by
+	a random variable $ X $ is defined for any real number $ x $ by
 	\[
 		F(x) = P(X \le x).
 	\]
@@ -133,21 +134,49 @@ The relation between CDF and pdf is express by,
 	F(a) = P(X\in (-\infty, a]) = \int_{-\infty}^{a} f(x) dx.
 \]
 
-\begin{definition}[Exception]
+\begin{definition}[Expectation]
 	If $ X $ is a random variable,
-	then the \textit{exception} or \textit{expected value} of $ X $, also called the mean of $ X $ and denoted by $ E(X) $, is define by
+	then the \textit{exception} or \textit{expected value} of $ X $, also called the mean of $ X $ and denoted by $ E(X) $, is defined by
 	\[
 		E(X) = \int xdF(x) 
 	\]
 \end{definition}
 
+\begin{definition}[Conditional Expectation]
+    If $ X $ and $ Y $ are jointly discrete random variables, we define $ E(X|Y=y) $ by,
+    \begin{align*}
+        E(X|Y=y) &= \sum_{x}xP(X=x|Y=y)\\ 
+                 &= \frac{\sum_{x}xP(X=x,Y=y) }{P(Y=y)}
+    \end{align*}
+    Similarly, if $ X $ and $ Y $ are jointly continuous r.v. with joint distribution function $ f(x,y) $, then $ E(X|Y) $ given by,
+    \begin{align*}
+        E(X|Y=y) &= \int_{x} x f_{X|Y}(x|y)dx \\
+                 &= \frac{1}{f_Y(y)}\int_{x} f_{X,Y}(x,y)dx 
+    \end{align*}
+    when, the denominator is zero, the expression is undefined.
+\end{definition}
+
+We have, $ E\left( E(X|Y) \right) = E(X) $. 
+
 \begin{definition}[Variance]
 	If $ X $ is a random variable with mean $ E(X) $, then the variance of $ X $,
-	denoted by $ Var(X) $, is define by,
+	denoted by $ Var(X) $, is defined by,
 	\[
 		Var(X)=E\left( (X-E(X))^{2} \right)
 	\]
 \end{definition}
+Now, 
+\begin{align*}
+    \tx{Var}(X) &= E\left((X-E(X))^{2}\right) \\ 
+                &= E\left( X^{2} - 2XE(X) + (E(X))^{2} \right) \\
+                &= E\left( X^{2} \right) - 2(E(X))^{2} + E(X)^{2} \\
+                &= E\left( X^{2} \right) - \left( E(X) \right)^{2}
+\end{align*}
+
+We can also define the \textbf{conditional variance formula} by,
+\[
+    \tx{Var}(X) = E(\tx{Var}(X|Y)) + \text{Var}(E(X|Y)).
+\]
 
 \begin{theorem}[The Weak Law of Large Numbers]
 	Let $X_1,X_2,\ldots$ be a sequence of in dependent and identically distributed 
@@ -166,6 +195,28 @@ The relation between CDF and pdf is express by,
 	Were, $\Phi(Z)$ denote the distribution function of a standard normal distribution.
 \end{theorem}
 
+\begin{definition}[Estimators]
+    Suppose now that we have an unknown real parameter $ \theta $ taking values in a parameter space $ T \subset \mathds{R} $. A real-valued statistic $ U = u(X) $ that is used to estimate $ \theta $ is called, appropriately enough, an estimator of $ \theta $.
+\end{definition}
+
+When we actually run the experiment and observe the data $ x $, the observed value $ u = u(x) $ (a single number) is the estimate of the parameter $ \theta $.
+
+Suppose, $ X_1, X_2, \ldots , X_n $ are random variables form $ F(x;\theta) $. To estimate a parameter function $ \Psi(\theta) $ consider some some estimator $ T(X_1,X_2,\ldots,X_n) $. Now \textbf{Mean Squared Error}(MSE) of the estimator $ \Psi(\theta) $ is defined by,
+\begin{equation}
+    \label{eq:MSE}
+    \tx{MSE}(T) = E_{\theta} (T(X_1,X_2,\ldots,X_n) - \Psi(\theta))^{2} 
+\end{equation}
+
+Now,
+\begin{align*}
+    \tx{MSE}(T) &= E_{\theta} \left(T-\Psi(\theta)\right)^{2}\\ 
+                &= E_{\theta} \left( T - E_{\theta}(T) + E_{\theta}(T) - \Psi(\theta)  \right)^{2}\\ 
+                &= \tx{Var}_{\theta}(T) + E_{\theta} (E_{\theta}(T) - \Psi(\theta) )^{2} \\
+                &= \tx{Variance of }T + (\tx{Biased}(T))^{2}
+\end{align*}
+
+For, unbiased estimator the term Biased$(T)$ is zero. Hence, for unbiased estimator variance is MSE.
+
 \subsection*{Sample Mean and Sample Variance}
 Suppose that $ X_1,X_2,\ldots,X_n $ are independent random variable having the same
 distribution function. Let $ \mu $ and $ \sigma ^{2} $ denote, respectively 
@@ -174,7 +225,6 @@ The quantity
 \[
 	\bar{X} \equiv \sum_{i=1}^{n} \frac{X_i}{n}
 \]
-
 which is the arithmetic average of the $ n $ data values, is called the \textit{sample mean}.
 When the population mean $ \mu $ is unknown, the sample mean is often used to estimate $ \mu .$
 
@@ -185,14 +235,39 @@ Because,
 	           & = \frac{n \mu}{n} = \mu
 \end{align*}
 
-if follows that $ \bar{X} $ is an unbiased estimator of $ \mu $, where we say that an estimator
+If follows that $ \bar{X} $ is an unbiased estimator of $ \mu $, where we say that an estimator
 of parameter is an unbiased estimator of that an estimator of a parameter is an unbiased estimator
 of that parameter if its expected value is equal to the parameter.
 
 The quantity $ S ^{2} $, define by 
 \[
-	S ^{2} = \frac{\sum_{i=1}^{n}(X_i - \bar(X))^{2} }{n-1}
+    S ^{2} = \frac{\sum_{i=1}^{n}(X_i - \Bar{X})^{2} }{n-1}
 \]
-is called the \textit{sample variance} .
-
-Whish is also unbised of $ \sigma ^{2} $
+is called the \textit{sample variance}.
+Now, 
+\begin{align*}
+    E\left(S^{2} \right) &= \frac{1}{n-1} E\left( \sum_{i = 1}^{n}(X_i - \Bar{X} )^{2}  \right)\\ 
+                         &= \frac{1}{n-1} E\left( \sum_{i=1}^{n}X_i^{2} - 2\Bar{X} \sum_{i=n}^{n} X_i + n \Bar{X}^{2}  \right)\\
+                         &= \frac{1}{n-1}E\left( \sum_{i=1}^{n}X_i^{2}\right) - \frac{n}{n-1} E\left( \Bar{X}^{2} \right) \\
+                         &= \frac{1}{n-1}\sum_{i=1}^{n}E\left( X_i^{2}\right) - \frac{n}{n-1} E\left( \Bar{X}^{2} \right)
+\end{align*}
+Now,
+\begin{align*}
+    \tx{Var}(X_i) &= E\left( X_i^{2} \right) - \left( E(X_i) \right)^{2} \\
+    \tx{or, }\, \sigma^{2} &= E(X_i^{2}) - \mu^{2} \\ 
+    \tx{or, }\, E(X_i^{2}) &= \sigma^{2} + \mu^{2} 
+\end{align*}
+And,
+\begin{align*}
+    \tx{Var}(\Bar{X}) &= E\left( \Bar{X}^{2} \right) - \left( E(\bar{X}) \right)^{2}\\ 
+    \tx{or, } E(\bar{X}^{2}) &= \tx{Var}\left( \frac{X_1+X_2+\ldots+X_n}{n} \right) + \mu^{2} \\ 
+                             &= \frac{1}{n^{2}} n\tx{Var}(X_i) + \mu^{2} \, \tx{ baecuse, all }X_i\tx{ are IID} \\
+                            &= \frac{1}{n}\sigma^{2} + \mu^{2}
+\end{align*}
+Now,
+\begin{align*}
+    E\left( S^{2} \right) &= \frac{1}{n-1}n\left( \sigma^{2} + \mu^{2} \right) - \frac{n}{n-1}\left( \frac{1}{n}\sigma^{2} + \mu^{2} \right)\\ 
+                          &= \left( \frac{n}{n-1} - \frac{1}{n-1} \right)\sigma^{2} \\ 
+                          &= \frac{n-1}{n-1}\sigma^{2} = \sigma^{2}.
+\end{align*}
+Hence,$ S^{2} $ is unbiased of $ \sigma ^{2} $

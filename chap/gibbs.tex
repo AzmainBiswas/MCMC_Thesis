@@ -25,7 +25,7 @@ Now the acceptance probability
 Hence, Gibbs sampler is a special Metropolis-Hastings algorithm whose acceptance probability is always 1.
 
 \subsection{Algorithm for Gibbs Sampler}
-Suppose $ \mathbf{x}\in \mathds{R}^m $. Then algorithm of The Gibbs sampler can summarized as below:
+Suppose $ \mathbf{x}\in \mathds{R}^m $. Then algorithm of The Gibbs sampler can be summarized as below:
 \begin{enumerate}
     \item Set initial values $ \mathbf{x}^{(0)} = ( x_1^{(0)}, x_2^{(0)} , \ldots , x_m^{(0)}  ) $.
     \item Obtain a new value $ \mathbf{x}^{(j)} = ( x_1^{(j)}, x_2^{(j)}, \ldots , x_m^{(j)} )$ form $ x^{(j-1)} $ through \textit{full conditional distributions}
@@ -226,7 +226,7 @@ Now, we see some examples how to use Gibbs sampler.
              This is relatively easy to implement.
      \end{enumerate}
 
-     Here if we take \fdefine{conjugate prior}{In Bayesian Inference, for a given likelihood function $ f(x|\theta) $, if the posterior distribution $ f(\theta|x) $ is in the same probability density family as the prior $ f(\theta) $, then the prior and posterior are called conjugate distributions with respect to that likelihood function and the prior is called a conjugate prior for the likelihood function $ f(x|\theta) $. } as our choice of prior it will be easy to sample from posterior distribution.
+     Here if we take \fdefine{conjugate prior}{In Bayesian Inference, for a given likelihood function $ f(x|\theta) $, if the posterior distribution $ f(\theta|x) $ is in the same probability density family as the prior $ f(\theta) $, then the prior and posterior are called conjugate distributions with respect to that likelihood function and the prior is called a conjugate prior for the likelihood function $ f(x|\theta) $. } As our choice of prior it will be easy to sample from posterior distribution.
 
      Now we have the conjugate prior for $ \mu $ for normal likelihood function is Normal distribution.
      \begin{align*}
@@ -318,7 +318,7 @@ Now, we see some examples how to use Gibbs sampler.
             \end{align*}
             \item Repeat step 2.
     \end{enumerate}
-    Now, we know if $ X\sim \tx{Inv-Gamma}(\alpha,\beta) $ then $ \frac{ 1 }{ X } \sim \tx{Gamma}(\alpha,\beta)$. Therefore sampling from Inverse-gamma not not different.
+    Now, we know if $ X\sim \tx{Inv-Gamma}(\alpha,\beta) $ then $ \frac{ 1 }{ X } \sim \tx{Gamma}(\alpha,\beta)$. Therefore, sampling from Inverse-gamma is not different at all.
 
     %% images
     \begin{figure}[H]
@@ -369,7 +369,7 @@ Now, we see some examples how to use Gibbs sampler.
         \label{fig:scale-inv-chi2 pre burn-in}
     \end{figure}
 
-    Here also we remove first 25\% of term as Burn-In and then we get $ \mu $ to be 9.9230 and $ \sigma^{2} $ to be 9.0258.  
+    Here also we remove first 25\% of term as Burn-In, and then we get $ \mu $ to be 9.9230 and $ \sigma^{2} $ to be 9.0258.  
     
     \begin{figure}[H]
         \centering

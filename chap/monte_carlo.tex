@@ -13,7 +13,7 @@ in which physicists wanted to understand how the physical
 properties of neutrons would be affected by various possible scenarios following a
 collision with a nucleus.
 
-The basis for Monte Carlo is Law of Large Number. If we simulate large number $X_1, X_2, \ldots$ iid
+The basis for Monte Carlo is Law of Large Number. If we simulate large number $X_1, X_2, \ldots$ IID
 copes of random variable $X$ Then we can approximate the true value $E(f(X))$ by simple mean
 $\frac{1}{n}\sum_{i=1}^{n} f(X_i)$. Here in Monte Carlo Random Sampling play the key factor for good estimation of $E(f(X))$.
 
@@ -38,27 +38,26 @@ with probability,
 	\sum_{i = 0}^{n} \frac{g(U_i)}{n} \to E(g(U))= I \text{ as } k \to \infty
 \]
 
-Hence we can approximate $I$ by generating a large number of random numbers $U_i$ and taking
+Hence, we can approximate $I$ by generating large numbers of random numbers $U_i$ and taking
 as our approximation the average value of $g(U_i)$.
 
 If we wanted to compute
 \[
 	I = \int_{a}^{b} g(x) dx
 \]
-then , by taking the substitute $y=(x-a)/(b-a)$, $dy = dx/(b-a)$, we see that
+then, by taking the substitute $y=(x-a)/(b-a)$, $dy = dx/(b-a)$, we see that
 \begin{align*}
 	I & = \int_{0}^{1} g(a+[b-a]y)(b-a)dy \\
 	  & = \int_{ 0}^{1} h(y) dy
 \end{align*}
 
-Where $h(y)= (b-a)g(a+[b-a]y)$. Thus we can approximate $I$ by continually generating random
+Where $h(y)= (b-a)g(a+[b-a]y)$. Thus, we can approximate $I$ by continually generating random
 numbers and then taking the average value of $h$ evaluated at these random numbers.
 
 Similarly, if we wanted
 \[
 	I = \int_{0}^{\infty} g(x) dx
 \]
-
 we could apply the substitution $y=1/(x+1)$, $dy=-dx/(x+1)^{2} = -y ^{2} dx$, to obtain the identity
 \[
 	I=\int_{0}^{1} h(y)dy
@@ -96,15 +95,15 @@ random variable with mean $I$, we can estimate $I$ by $\sum_{i = 1}^{k}g(U_1^{i}
 	\[
 		I = E(e^{-\frac{U ^{2}}{2}})
 	\]
-    where, $U\sim \text{U}[0,1]$. Then simulating a large number of $U_1, U_2, \ldots, U_n\sim \text{U}[0,1]$ and calculating,
+    where, $U\sim \text{U}[0,1]$. Then simulating large number of $U_1, U_2, \ldots, U_n\sim \text{U}[0,1]$ and calculating,
 	\[
 		\sum_{i = 1}^{n}  \frac{e^{-\frac{U_i ^{2}}{2}}}{n}
 	\]
 	we can evaluate $I$.
 
-	Hence the algorithm is:\\
+	Hence, the algorithm is:\\
     STEP 1: Generate $U\sim \text{U}[0,1]$. \\
-	STEP 2: Calculate $ e^{-\frac{U ^{2}}{2}} $ and retain it. goto STEP 1. \\
+	STEP 2: Calculate $ e^{-\frac{U ^{2}}{2}} $ and retain it and go to STEP 1. \\
 	STEP 3: After large number of iteration evaluate the average.
 	\begin{table}[H]
 		\begin{center}
@@ -159,7 +158,7 @@ Note that since $(X,Y)$ is uniformly distributed in the square it follows that
 	                                    & = \frac{\text{Area of the circle} }{\text{Area of the square} } = \frac{\pi}{4}
 \end{align*}
 
-Hence we generate a large number of points in the square, the proportion of points that fall within the circle will be approximately $\pi/4$.
+Hence, we generate large number of points in the square, the proportion of points that fall within the circle will be approximately $\pi/4$.
 Now, if $X$ and $Y$ were independent and both were uniformly distributed over $(-1,1)$, their joint density would be
 \begin{align*}
 	f(x,y) & = f(x)f(y)                                         \\
@@ -180,7 +179,7 @@ Then,
 \[
 	E(I)=P(X ^{2} + y ^{2} \le 1) = \frac{\pi}{4}.
 \]
-Hence the Algorithm for estimating $\pi$ is:\\
+Hence, the Algorithm for estimating $\pi$ is:\\
 STEP 1: Set Circle = 1. \\
 STEP 2: Generate $U_1, U_2\sim \text{U}[0,1]$\\
 STEP 3: If $(2U_1-1)^{2}+ (2U_2-1)^{2} \le 1$ Set Circle = Circle + 1, Otherwise return to STEP 2.

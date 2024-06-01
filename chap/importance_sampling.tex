@@ -15,7 +15,7 @@ CDF $F_1$,
 	    & = \int \lambda(x)\phi_0(x)dF_1(x).
 \end{align*}
 
-where $\lambda(x)=\frac{dF_0}{dF_1}(x)$. If $F_0$, $F_1$ have densities
+Where $\lambda(x)=\frac{dF_0}{dF_1}(x)$. If $F_0$, $F_1$ have densities
 $f_0$, $f_1$, then $\lambda(x)=\frac{f_0(x)}{f_1(x)}$; if $F_0,$ $F_1$
 have respective pmfs $f_0$, $f_1$, then also $\lambda(x)=\frac{f_0(x)}{f_1(x)}$
 This raises the interesting possibility that we can sample from a general $F_1$, and
@@ -24,7 +24,7 @@ subsequently use the usual Monte Carlo estimate
 	\hat{\mu} = \frac{1}{n} \sum_{i = 1}^{n} \lambda(X_i)\phi_0(X_i) = E_{F_1}[\lambda(X_i)\phi_0(X_i)].
 \]
 
-where $X_1, X_2, \ldots, X_n$ is Monte Carlo sample from $F_1$.
+Where $X_1, X_2, \ldots, X_n$ is Monte Carlo sample from $F_1$.
 Importance sampling poses the problem of finding an optimal choice of $F_1$ for which to sample,
 so that $\hat{\mu}$ has the smallest possible variance.
 The distribution $F_1$ hat ultimately gets
@@ -38,7 +38,7 @@ We can visualize this method by an example.
 	\[
 		I = \int_{0}^{10} e^{-2 |x-5|} dx.
 	\]
-	doing it analytically we get $I = 0.9999$.
+	Doing it analytically we get $I = 0.9999$.
 
 	Now, suppose $\phi(x) = e^{-2 |x-5|}$ then we want to evaluate
 	\[
@@ -134,7 +134,7 @@ importance sampling as an optimization problem, but because the circumstances
 force us to consider different sampling distributions $F$.
 
 Now, we also assume that $F_0,$ $F_1$ both have densities, say $f_0$, $f_1$.
-If $F_0$, $F_1$ are both discrete then the notation only change but the argument is same.
+If $F_0$, $F_1$ are both discrete then the notation only change, but the argument is same.
 Suppose then $f_i(x)=\frac{h_i(x)}{c_i},\ i=0,1$, where the assumption is that $h_0$, $h_1$
 are completely known and also computable, but $c_0$, $c_1$ are unknown and are not even computable.
 Then, as we showed above, for any function $\phi$ for which the expectation $E_{F_0}[\phi(X)]$ exist,
@@ -221,12 +221,12 @@ The basic plug-in estimate for $\mu$ is the so-called ratio estimate
 We now address the question of the optimal choice of the importance sampling
 distribution. There is no unique way to define what an optimal choice means. We
 formulate one definition of optimality and provide an optimal importance sampling
-distribution. The optimal choice would not be practically usable, as we shown.
+distribution. The optimal choice would not be practically usable, as we are shown.
 However, the solution still gives useful insight.
 
 \begin{theorem}
 	Consider the importance sampling estimator $\hat{\mu} = \frac{1}{n}\sum_{i=1}^{n} \lambda(X_i)\phi(X_i) $ for $\mu=\int \phi(x)f_0(x)dx $, where
-	$\lambda(x) =\frac{f_0(x)}{f_1(x)}$, and $X_1,\ldots,X_n$ are iid observations from $F_1$
+	$\lambda(x) =\frac{f_0(x)}{f_1(x)}$, and $X_1,\ldots,X_n$ are IID observations from $F_1$
 	Assume that $\phi(x)\ge0$, and $\mu>0$. Then, $Var_{F_1}(\hat{\mu})$ is
 	minimized when $f_1(x)=\frac{\phi(x)f_0(x)}{\mu}$.
 \end{theorem}

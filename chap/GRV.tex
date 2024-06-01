@@ -141,7 +141,7 @@ and setting $X=F^{-1}(U)$.
 	\]
     We see that if $U\sim \text{U}(0,1)$ then also $1-U\sim \text{U}(0,1)$ thus  $\ln(1-U)$ has the same distribution as  $\ln(U)$ so,
 	\[
-		X = F^{-1}(U) = -\frac{\ln(U)}{\lambda}.
+		X = F^{-1}(U) = -\frac{\ln(U)}{\lambda}
 	\]
 	will also work. If we use second expression then the algorithm will take less computing power hence less time.
 	\begin{figure}[H]
@@ -176,12 +176,12 @@ and setting $X=F^{-1}(U)$.
 \end{example}
 
 \subsection{Accept - Reject Method}
-The accept–reject method is useful when it is difficult to directly simulate $f(x)$ but we can generate another density $g(x)$ such that $f(x)/g(x)$
+The Accept–reject method is useful when it is difficult to directly simulate $f(x)$ but we can generate another density $g(x)$ such that $f(x)/g(x)$
 is uniformly bounded and it is much easier to simulate $g(x)$. We simulate  $X$ from  $g$, and retain it or toss it according
 to a probability proportional to $f(x)/g(x)$.
 Because an $X$ value is either retained
 or discarded, depending on whether it passes the admission rule, the method is called
-the accept–reject method. The density $g(x)$ is called the envelope density.
+the Accept–reject method. The density $g(x)$ is called the envelope density.
 
 The method proceeds as follows, \\
 STEP 1: Find a density $g$ and a finite constant  $c$ such that  $\frac{f(x)}{g(x)}\le c \ \forall x$.\\
