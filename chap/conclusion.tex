@@ -1,0 +1,15 @@
+\chapter*{Conclusion}
+
+In this project, I have discussed how we can simulate different kinds of random variables even from a unknown distribution function which are only partially known to us partially.
+Here, We use the inverse transform method for both discrete and continuous random variables, the accept-reject Method and the bivariate technique to simulate from known distribution function. Later, we use Importance Sampling for less known PDFs. We find out that although these methods are sufficient for generating random variables,
+but when it comes to generating random variables that are only known up to the normalizing constant, the previously mentioned methods truly struggle.
+So we introduce some new methods known as Markov Chain Monte Carlo (MCMC).
+The first MCMC method we have discussed here is the Metropolis-Hastings Algorithm (MH Algorithm), which help us to overcome the problem we have with general Monte Carlo Methods.
+Although, the HM Algorithm is a very sophisticated algorithm, but it is really difficult to sample multidimensional random variables.
+To tackle multi-variable PDFs, we introduce another algorithm named Gibbs Sampler.
+It is another version of Metropolis-Hastings algorithm, which is optimized for generating multidimensional random variables.
+With the help of MCMC methods and Bayesian Inference, we can solve a variety of difficult problems, like finding the parameters of a distribution for given observed samples.
+
+Even if Gibbs Sampler looks like a very good algorithm but it has its own limitations, like we have to find the prior distributions, which is easily computable.
+
+We can use MCMC method in the various domains of science like Bayesian statistics, computational physics, computational biology and computational linguistics

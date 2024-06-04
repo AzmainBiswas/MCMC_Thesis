@@ -13,7 +13,7 @@ Arianna Rosenbluth wrote the first full implementation of Metropolis Algorithm f
 
 For many years this algorithm was simply known as \textit{Metropolis Algorithm}, later in 1970 W.K. Hastings introduce more general version of this algorithm in his paper \textit{"Monte Carlo Sampling Methods Using Markov Chains and Their Applications"}. This generalized Metropolis algorithm is known as \textit{Metropolis-Hastings algorithm}(MH algorithm).
 
-Suppose we want to simulate a random variables or sequence of random variable with probability mass function
+Suppose we want to simulate a random variable or sequence of random variables with probability mass function
 \begin{equation}
 	\pi(\theta) = \frac{f(\theta)}{K}
 \end{equation}
@@ -393,7 +393,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 	\end{align*}
 	and accept $ \sigma_{t+1} $ with probability $ \alpha $
 
-	But why take $ \log $? Because, it helps with analytical precision, i.e. multiplying thousand of small values may case an underflow in the system's memory (situation where a number is so close to zero that it cannot be represented accurately within the given precision of the system's floating point representation.). $ \log $ is perfect solution because it transforms multiplication to additions and small positive numbers into non-small negative numbers.
+	But why take $ \log $? Because, it helps with analytical precision, i.e. multiplying a thousand of small values may case an underflow in the system's memory (situation where a number is so close to zero that it cannot be represented accurately within the given precision of the system's floating point representation.). $ \log $ is perfect solution because it transforms multiplication to additions and small positive numbers into non-small negative numbers.
 
 	Now, using \Cref{eq:prior} as \textbf{prior}, \Cref{eq:jumping for mh example2} as \textbf{jumping distribution}, \Cref{eq:2nd accept mh example2} as acceptance scam and $0.1$ to be initial state we use Metropolis-Hastings Algorithm.
 
