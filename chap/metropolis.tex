@@ -25,8 +25,8 @@ The \textit{Metropolis-Hastings algorithm} do exactly this. MH algorithm constan
 \subsection{Algorithm for Metropolis-Hastings}
 \begin{enumerate}
 	\item Start with any \textbf{initial state}  $ \theta_0 $ satisfying $ f(\theta) > 0 $.
-	\item Using a \textbf{current state}  $ \theta $, sample \textbf{candidate state} $ \theta' $ for some \textbf{jumping distribution} $ q(\theta, \theta') = q(\theta'|\theta) $, which is the probability of jumping to $ \theta' $ provided the current state in $ \theta $.
-	\item Given the candidate state $ \theta' $ calculate the \textbf{acceptance probability} $ \alpha(\theta,\theta') $ by,
+	\item Using a \textbf{current state}  $ \theta $, sample \textbf{candidate state} $ \theta' $ from some \textbf{jumping distribution} $ q(\theta, \theta') = q(\theta'|\theta) $, which is the probability of jumping to $ \theta' $ provided the current state in $ \theta $.
+	\item For a given the candidate state $ \theta' $ calculate the \textbf{acceptance probability} $ \alpha(\theta,\theta') $ by,
 	      \[
 		      \alpha(\theta,\theta') =\min\left( \frac{\pi(\theta')q(\theta', \theta)}{\pi(\theta)q(\theta, \theta')}, 1\right) = \min\left( \frac{f(\theta')q(\theta', \theta)}{f(\theta)q(\theta, \theta')} , 1\right)
 	      \]
@@ -35,7 +35,7 @@ The \textit{Metropolis-Hastings algorithm} do exactly this. MH algorithm constan
 \end{enumerate}
 We can summarize the Metropolis-Hastings Algorithm as first computing,
 \[
-	\alpha(\theta_{t},\theta_{t+1}) = \min \left( \frac{f(\theta_{t+1})q(\theta_{t+1},\theta_t)}{ f(\theta_t) q(\theta_t,\theta_{t+1}) } \right)
+	\alpha(\theta_{t},\theta_{t+1}) = \min \left( \frac{f(\theta_{t+1})q(\theta_{t+1},\theta_t)}{ f(\theta_t) q(\theta_t,\theta_{t+1}) }, 1 \right)
 \]
 and then accepting the candidate point $ \theta_{t+1} $ with probability $ \alpha $. This generates a Markov Chain $ ( \theta_0,\theta_1,\ldots,\theta_t,\ldots ) $,
 as the transition probabilities from $ \theta_t $ to $ \theta_{t+1} $ depends only on $ \theta_t $ and not on $ (\theta_0,\theta_1,\ldots,\theta_{t-1}) $.
@@ -58,11 +58,11 @@ or
 
 For time-reversibility we choose jumping distribution $ q(\theta_1,\theta_2) $ to be irreducible and $ q(\theta_1,\theta_2) = q(\theta_2,\theta_1) $ and for \Cref{balance-equatation} we consider the cases.
 
-\textbf{Case 1:} $ q(\theta_1,\theta_2)\pi(\theta_1) = q(\theta_1,\theta_2)\pi(\theta_1)$
+\textbf{Case 1:} $ q(\theta_1,\theta_2)\pi(\theta_1) = q(\theta_2,\theta_1)\pi(\theta_2)$
 Hence, $$ \alpha(\theta_1,\theta_2) = \alpha(\theta_1,\theta_2) = 1 $$
 In this case \Cref{balance-equatation} will easily hold.
 
-\textbf{Case 2:} $ q(\theta_1,\theta_2)\pi(\theta_1) > q(\theta_1,\theta_2)\pi(\theta_1)$.
+\textbf{Case 2:} $ q(\theta_1,\theta_2)\pi(\theta_1) > q(\theta_2,\theta_1)\pi(\theta_2)$.
 Hence,
 \[
 	\alpha(\theta_1,\theta_2) = \frac{\pi(\theta_2)q(\theta_2,\theta_1)}{\pi(\theta_1)q(\theta_1,\theta_2)} \ \ \text{and} \ \ \alpha(\theta_2,\theta_1) = 1
@@ -77,7 +77,7 @@ Then,
 \end{align*}
 Hence this case satisfies \Cref{balance-equatation}.
 
-\textbf{Case 3:} $ q(\theta_1,\theta_2)\pi(\theta_1) < q(\theta_1,\theta_2)\pi(\theta_1)$
+\textbf{Case 3:} $ q(\theta_1,\theta_2)\pi(\theta_1) < q(\theta_2,\theta_1)\pi(\theta_2)$
 Hence,
 \[
 	\alpha(\theta_1,\theta_2) = 1  \ \ \text{and} \ \  \alpha(\theta_2,\theta_1) = \frac{\pi(\theta_1)q(\theta_1,\theta_2)}{\pi(\theta_2)q(\theta_2,\theta_1)}
@@ -92,7 +92,7 @@ Then,
 Hence also for this case \Cref{balance-equatation} is satisfied.
 
 \subsection{Burn-In period}
-A main problem with the successful implementation of Metropolis-Hastings Algorithm infect any for any MCMC Methods is number of steps until the chain approaches stationarity.
+A main problem with the successful implementation of Metropolis-Hastings Algorithm infect any MCMC Methods is number of steps until the chain approaches stationarity.
 Typically, the first $ 25\% $ samples are thrown out. These are called burn-in of a sample.
 
 The name "burn-in" comes form electronics. Many electronics components fail quickly, those that don't are more reliable subset. So a burn-in is done at the factory to eliminate the worst.
@@ -126,12 +126,12 @@ We can adjust the variance of jumping distribution to get better mixing.
 Second one is, we use an independent chain. The probability of jumping to a point $ \theta_{t+1} $ is independent of current position $ \theta_t $ of the chain, i.e. $ q(\theta_t,\theta_{t+1}) = g(y) $. Thus the current value is simply drawn from a distribution of interest, independent of current position.
 
 \subsection{Convergence Diagnostics}
-Now we have to ensure that Markov Chains have reached stationarity and only use those samples that have been generated after stationarity has been reached. But it is impossible to ensure when those two conditions are satisfied since the Markov Chain does not begin with stationary distribution. Instead we can use various methods to assess whether or not stationarity appears to have reached. Most common one is:
+Now we have to ensure that Markov Chains have reached stationarity and only use those samples that have been generated after stationarity has been reached. But it is impossible to ensure when those two conditions are satisfied since the Markov Chain does not begin with stationary distribution. Instead, we can use various methods to assess whether or not stationarity appears to have reached. Most common one is:
 
-\textbf{Visual inspection} where we plot variable of interest vs iteration number, plot running means of variables of interest etc or run various iteration of samples with different initial states and different jumping distribution and compare them. This method is manual and need lot of works.
+\textbf{Visual inspection} where we plot variable of interest vs iteration number, plot running means of variables of interest etc or run various iteration of samples with different initial states and different jumping distribution and compare them. This method is manual and need lots of works.
 
 Another one is \textbf{Geweke test}, splits sample (after burn-in period) into two parts.
-Say the first 10\% and last 50\%. If the chain is at stationarity, the means of two samples should be equal. A modified z-test can be used to comparer the two subsamples,
+Say the first 10\% and last 50\%. If the chain is at stationarity, the means of two samples should be equal. A modified z-test can be used to compare the two subsamples,
 and the resulting test statistic is often referred to as a \textbf{Geweke z-score}.
 A value larger than 2 indicates that the mean of
 the series is still drifting, and a longer burn-in is required before monitoring the
