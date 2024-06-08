@@ -15,10 +15,10 @@ successive values $x_n, n\ge1$, by letting
 	x_n = a x_{n-1} \text{ modulo } m
 \end{equation}
 where $a$ and $m$ are given positive integers, and where \Cref{MCM} means that $ax_{n-1}$ is divided by  $m$ and remainder is taken as the
-value of $x_n$. Thus, each value of $x_n$ is either $0,1, \ldots, m-1$ and the quantity $x_n / m$ is Pseudorandom number\footnote{If we know the initial seed then we can calculate the whole samples so these numbers are not really a random numbers so we call these as \textbf{Pseudorandom numbers.} } and follows
+value of $x_n$. Thus, each value of $x_n$ is either $0,1, \ldots, m-1$ and the quantity $x_n / m$ is Pseudorandom number\footnote{If we have constant seed $ x_0 $, $a$ and $ m $, we will gate same set of random numbers, so these numbers are not really a random numbers that is why we call these as \textbf{Pseudorandom numbers}. } and follows
 an approximation to the value of a uniform $(0,1)$ random variable.
 
-The approach specified by \Cref{MCM} to generate random numbers is called the Multiplicative Congruential Method.
+The approach specified by \Cref{MCM} to generate random numbers is called the \textit{Multiplicative Congruential} Method.
 
 Another method is
 \[
@@ -91,7 +91,7 @@ So, $X$ has the desired distribution.
 \section{Generating Continuous Random Variables}
 
 \subsection{The Inverse Transform Algorithm}
-To generate Continuous random variables The Inverse Transform Algorithm is very important method. It is based on a following theorem.
+To generate continuous random variables the Inverse Transform Algorithm is very important method. It is based on a following theorem.
 \begin{theorem}
 	\label{ITA theorem}
 	Let $U$ be a uniform  $(0,1)$ random variable. For any continuous distribution function  $F$ the random variable  $X$ defined by
@@ -241,7 +241,7 @@ The following theorem supports the method.
 	So, summing up, we can generate the standard normal random variable $Z$ as follows:\\
     STEP 1: Generate independent $X_1, X_2\sim \text{Exp}(1) $\\
 	STEP 2: If $X_2\ge (X_1-1)^2 /2$ retain $X_1$. Otherwise, return to Step 1.\\
-    STEP 3: Generate $U\sim \text{U}(0,1)$ and set,
+    STEP 3: Generate $U\sim \text{U}(0,1)$ and set
 	\begin{eqnarray*}
 		Z=
 		\begin{cases}
@@ -310,7 +310,7 @@ And in the \Cref{generate beta} for Beta(5,2) the acceptance rate is 0.4069
 
 \subsection{Bivariate Techniques}
 Let $X$ and $Y$ be independent slandered normal random variable and let $R$ and $\theta$
-denote the polar coordinates of vector $(X,Y)$. That is,
+denote the polar coordinates of vector $(X,Y)$. That is
 \begin{align*}
 	R^{2}       & = X^{2} + Y^2 \\
 	\tan \theta & = \frac{Y}{X}
@@ -325,7 +325,7 @@ To determine the joint density of $R^{2} $ and $\Theta$ - call it $g(d,\theta)$ 
 \[
 	d=x^{2}+y^{2}, \ \  \theta=\tan^{-1}\left( \frac{y}{x} \right)
 \]
-Then the joint density function of $d $ and $\Theta$ is,
+Then the joint density function of $d $ and $\Theta$ is
 
 \begin{align*}
     \label{jacobian transformation}
@@ -340,7 +340,7 @@ where,
 		\frac{\partial y}{\partial t} & \frac{\partial y}{\partial \theta} \\
 	\end{vmatrix} = \frac{1}{2}.
 \]
-Then, replacing the value of $ x = \sqrt{d}\sin(\theta)  $ and $ y=\sqrt{d}\cos(\theta) $ in \Cref{jacobian transformation} we get,
+Then, replacing the value of $ x = \sqrt{d}\sin(\theta)  $ and $ y=\sqrt{d}\cos(\theta) $ in \Cref{jacobian transformation} we get
 \begin{equation}
 	g(d,\theta) = \frac{1}{2}\frac{1}{2\pi} e^{-d/2},\ \ \ 0< d<\infty, 0<\theta<2 \pi.
 \end{equation}

@@ -146,13 +146,13 @@ Where, $ X_1 $ is the first 10\% subsamples, $ X_2 $ last 50\% subsamples, $ S_0
 Now we see some examples how we can use Metropolis-Hastings Algorithm.
 
 \begin{example}[Simulating from an unknown distribution]
-	The besis problem Metropolis-Hastings algorithm solves is to provide a method for sampling from some arbitrary probability distribution. In this example we see how it is works,
+	The basic problem Metropolis-Hastings algorithm solves is to provide a method for sampling from some arbitrary probability distribution. In this example we see how it is works.
 
 	Suppose, we have
 	\[
 		p(x) = \frac{e^{(-x^2)} \left( 2 + \sin(5x) + \sin(2x) \right) }{ \int_{-\infty}^{\infty} e^{(-u^2)} \left( 2 + \sin(5u) + \sin(2u) \right) du }
 	\]
-	Now we want to generate a random variables form $ p(x) $. It may be very hard to calculate the integration in the denominator, or we don't want to calculate it. i.e., we know the probability distribution up to normalizing constant.
+	Now we want to generate random variables form $ p(x) $. It may be very hard to calculate the integral in the denominator, or we do not want to calculate it. i.e., we know the probability distribution up to normalizing constant.
 	So we have,
 	\[
 		p(x) \propto e^{(-x^2)} \left( 2 + \sin(5x) + \sin(2x) \right)
@@ -168,7 +168,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 	\[
 		q(\theta_{t-1}, \theta_{t}) = q(\theta_t|\theta_{t-1}) \sim \text{N}(\theta_{t-1},\sigma^2)
 	\]
-	for some stander deviation $ \sigma $ that we have to select.
+	for some standard deviation $ \sigma $ that we have to select.
 	Then,
 	\[
 		q(\theta_{t} | \theta_{t-1}) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( - \frac{1}{2 \sigma^2} (\theta_t - \theta_{t-1})^2 \right)
@@ -201,11 +201,11 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-1-value-hist-bo.png}
-		\caption{Samples of case 1 after removing Burn-Ins}
+		\caption{Samples of case 1 after removing Burn-ins}
 		\label{fig:MH sample 1 after burn-in}
 	\end{figure}
 
-	\textbf{Case 2:}  Now we take -1 as initial state and $ \sigma $ to be 2, then we get mean and variance of the samples 0.1832 and 0.4641 respectively. After removing the Burn-Ins we get mean 0.17842, variance 0.47186 and Geweke Z-score 0.5433.
+	\textbf{Case 2:}  Now we take -1 as initial state and $ \sigma $ to be 2, then we get mean and variance of the samples 0.1832 and 0.4641 respectively. After removing the Burn-ins we get mean 0.17842, variance 0.47186 and Geweke Z-score 0.5433.
 
 	\begin{figure}[H]
 		\centering
@@ -216,10 +216,10 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-2-value-hist-bo.png}
-		\caption{Samples of case 2 after removing Burn-Ins}
+		\caption{Samples of case 2 after removing Burn-ins}
 	\end{figure}
 
-	\textbf{Case 3:} As case 3 we take initial state to be -4 and $ \sigma = 1$, then we have mean = 0.1906, variance = 0.4686. From \Cref{fig:MH sample3} we can see for first few samples we get means to fluctuate heavily after that it is stable. So, here it is necessary to remove first few terms (Burn-In). After removing first 25\% of term we get, mean = 0.1695, variance = 0.4686 and Geweke Z-score = -0.348. Hence seeing the Geweke z-score we see after Burn-Ins are removed we get good estimation of $ p(x) $ (\Cref{fig:MH sample3 after burn in}).
+	\textbf{Case 3:} As case 3 we take initial state to be -4 and $ \sigma = 1$, then we have mean = 0.1906, variance = 0.4686. From \Cref{fig:MH sample3} we can see for first few samples we get means to fluctuate heavily after that it is stable. So, here it is necessary to remove first few terms (Burn-in). After removing first 25\% of term we get, mean = 0.1695, variance = 0.4686 and Geweke Z-score = -0.348. Hence seeing the Geweke z-score we see after Burn-ins are removed we get good estimation of $ p(x) $ (\Cref{fig:MH sample3 after burn in}).
 
 	\begin{figure}[H]
 		\centering
@@ -231,11 +231,11 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.9\textwidth]{./images/metropolis/example1/sample-3-value-hist-bo.png}
-		\caption{Samples of case 3 after removing Burn-Ins}
+		\caption{Samples of case 3 after removing Burn-ins}
 		\label{fig:MH sample3 after burn in}
 	\end{figure}
 
-	\textbf{Case 4:} In this scenario, we start with an initial value far outside the desired distribution, specifically at 10, with a standard deviation of $\sigma = 2$. Observing \Cref{fig:MH sample4}, it becomes evident that removing some of the initial samples (known as Burn-Ins) is necessary. After discarding the first 25\% of the samples, we achieve a much better approximation of the target distribution. The results after this adjustment show a mean of 0.1695, a variance of 0.4686, and a Geweke Z-score of -0.4693.
+	\textbf{Case 4:} In this scenario, we start with an initial value far outside the desired distribution, specifically at 10, with a standard deviation of $\sigma = 2$. Observing \Cref{fig:MH sample4}, it becomes evident that removing some of the initial samples (known as Burn-ins) is necessary. After discarding the first 25\% of the samples, we achieve a much better approximation of the target distribution. The results after this adjustment show a mean of 0.1695, a variance of 0.4686, and a Geweke Z-score of -0.4693.
 
 	\begin{figure}[H]
 		\centering
@@ -247,7 +247,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-4-value-hist-bo.png}
-		\caption{Samples of case 4 after removing Burn-Ins}
+		\caption{Samples of case 4 after removing Burn-ins}
 	\end{figure}
 
 	\textbf{Case 5:}  Now, let's examine some poor examples of the jumping distribution, using $\sigma = 0.025$ and an initial state of 10. Initially, the mean is 0.2626 and the variance of the sample is 1.4632. Although the mean is quite accurate, the high variance and triable Geweke Z-score (1.152) indicates a poor estimation, as confirmed by \Cref{fig:MH sample5}. It is crucial to remove the first 25\% of the samples. After discarding these initial samples, we obtain a mean of 0.0726 and a variance of 0.3740. With the reduced variance, this can be considered a good estimator.
@@ -262,10 +262,10 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-5-value-hist-bo.png}
-		\caption{Samples of case 5 after removing Burn-Ins}
+		\caption{Samples of case 5 after removing Burn-ins}
 	\end{figure}
 
-	\textbf{Case 6:} Now we take $ \sigma $ to be 20 and initial state 15. After removing Burn-Ins we obtain mean of 0.1899, variance of 0.4423 and Geweke Z-score 3.301. Here we can see not much candidates are getting accepted and jugging from Geweke Z-score we can't accept these samples.
+	\textbf{Case 6:} Now we take $ \sigma $ to be 20 and initial state 15. After removing Burn-ins we obtain mean of 0.1899, variance of 0.4423 and Geweke Z-score 3.301. Here we can see not much candidates are getting accepted and jugging from Geweke Z-score we can't accept these samples.
 
 	\begin{figure}[H]
 		\centering
@@ -276,14 +276,14 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1\textwidth]{./images/metropolis/example1/sample-6-value-hist-bo.png}
-		\caption{Samples of case 6 after removing Burn-Ins}
+		\caption{Samples of case 6 after removing Burn-ins}
 	\end{figure}
 
 	\begin{table}[ht]
 		\centering
 		\begin{tabular}{|c|p{2cm}|c|c|c|p{2cm}|p{2cm}|p{2cm}|}
 			\hline
-			Case & Initial State & $\sigma$ & Mean   & Variance & Mean after Burn-In & Variance after Burn-In & Geweke z-score \\ \hline
+			Case & Initial State & $\sigma$ & Mean   & Variance & Mean after Burn-in & Variance after Burn-in & Geweke z-score \\ \hline
 			1    & 0             & 2        & 0.1866 & 0.4754   & 0.1900             & 0.4751                 & 0.3041         \\ \hline
 			2    & -1            & 2        & 0.1832 & 0.4641   & 0.17842            & 0.4718                 & 0.5433         \\ \hline
 			3    & -4            & 1        & 0.1906 & 0.4686   & 0.1695             & 0.4686                 & -0.348         \\ \hline
@@ -378,7 +378,7 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 	\end{equation}
 	If the ratio is less than 1, then we compare it to a uniform random number from $ [0,1] $. If the ratio is larger or equal to the random number we accept $ \sigma_{t+1} $ else we reject it.
 
-	Now we take $ \log $ on the both side of \Cref{eq:1st accept mh example2}. Since $ \log $ is increasing function, so sign will be same then we have,
+	Now we take $ \log $ on the both side of \Cref{eq:1st accept mh example2}. Since $ \log $ is increasing function, sign will be same then we have,
 	\begin{gather*}
 		\log \left(  \mathcal{L}_n(\sigma_{t+1})f(\sigma_{t+1}) \right) - \log \left(  \mathcal{L}_n(\sigma_{t})f(\sigma_{t})\right) \ge 0 \\
 		\text{or, } \log( \mathcal{L}_n(\sigma_{t+1}) ) + \log(f(\sigma_{t+1})) \ge \log(\mathcal{L}_n(\sigma_t)) + \log(f(\sigma_t)) \\
@@ -404,12 +404,12 @@ Now we see some examples how we can use Metropolis-Hastings Algorithm.
 		\label{fig:example2 values}
 	\end{figure}
 
-	After running 100000 iteration we only accepted 817 values and values are looks like \Cref{fig:example2 values}. Here we can see we have to throw Burn-Ins (first 25\% sample). After removing Burn-Ins we get our desire samples to estimate $ \sigma $.
+	After running 100000 iteration we only accepted 817 values and values are looks like \Cref{fig:example2 values}. Here we can see we have to throw Burn-ins (first 25\% sample). After removing Burn-ins we get our desire samples to estimate $ \sigma $.
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1\textwidth]{images/metropolis/example2/values-after-burnin.png}
-		\caption{Accepted values after removing Burn-Ins}
+		\caption{Accepted values after removing Burn-ins}
 	\end{figure}
 
 	From this we get our desire values of $ \sigma $ to be 3.0032, variance of the samples to be 0.0001 and 0.05545 as Geweke Z-score. Because of low variance and Geweke Z-score less than 2 for simulated data we conform that it is very good estimate.

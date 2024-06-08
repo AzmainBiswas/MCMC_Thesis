@@ -9,11 +9,11 @@ such as $ (x_1,x_2,\ldots,x_m) \to (y_1,x_2,\ldots,x_m) \to (y_1,y_2,\ldots,x_m)
 For example, the transition $ (x_1,x_2,\ldots,x_m) \to (y_1,x_1,\ldots,x_m) $ is made by simulating from the distribution $ f(x_1|x_2,\ldots,x_m) $.
 These conditional distribution of one coordinate gives all the rest are \textbf{full conditionals}. As, long as we can calculate and also simulate from all the full conditionals, a complicated multidimensional problem turns in to $ m $ one dimensional problems.
 
-If current state $ \mathbf{x} = (x_1,x_2,x_3,\ldots,x_m)  $.Pick the coordinate to be changed at random from the $ m $ available coordinate. If the coordinate picked is $ i $, then the state $ \mathbf{y} = (x_1,x_2, \ldots , x_{j-1}, x , x_{j+1}, \ldots , x_m) $ work as a candidate state.
+If current state $ \mathbf{x} = (x_1,x_2,x_3,\ldots,x_m)  $. Pick the coordinate to be changed at random from the $ m $ available coordinate. If the coordinate picked is $ i $, then the state $ \mathbf{y} = (x_1,x_2, \ldots , x_{i-1}, x , x_{i+1}, \ldots , x_m) $ work as a candidate state.
 Then Gibbs sampler uses the Metropolis-Hastings algorithm with
 \begin{align*}
     q(\mathbf{x},\mathbf{y}) &= \frac{1}{m} P( X_i = x | X_j = x_j, i\neq j )\\ 
-                             &= \frac{f(\mathbf(y))}{mP(X_j = x_j, i \neq j)}
+                             &= \frac{f(\mathbf{y})}{mP(X_j = x_j, i \neq j)}
 \end{align*}
 Now the acceptance probability
 \begin{align*}
@@ -33,7 +33,7 @@ Suppose $ \mathbf{x}\in \mathds{R}^m $. Then algorithm of The Gibbs sampler can 
                 x_1^{(j)} &\sim f(x_1|x_2^{(j-1)}, \ldots, x_m^{(j-1)}  ),\\
                 x_2^{(j)} &\sim f(x_2|x_1^{(j)}, x_3^{(j-1)}, \ldots, x_m^{(j-1)}), \\
                 \vdots \\
-                x_m^{(j)} &\sim f(x_m|x_1^{(j)}, \ldots , x_{m-1}^{(j)}  );
+                x_m^{(j)} &\sim f(x_m|x_1^{(j)}, \ldots , x_{m-1}^{(j)}  )
             \end{align*}
             \item Change counter $ j $ to $ j + 1 $ and return to step 2 until convergence is reached. 
 \end{enumerate}
@@ -43,7 +43,7 @@ Now, we see some examples how to use Gibbs sampler.
 
 \begin{example}[Generating standard bivariate normal distribution]
 
-    In this example we try to generate standard bivariate normal distribution with correlation coefficient $ \rho $. Suppose,
+    In this example we try to generate standard bivariate normal distribution with correlation coefficient $ \rho $. Suppose
     \[
         (X_1, X_2) \sim \text{N}\left(  
             \begin{bmatrix}
@@ -94,7 +94,7 @@ Now, we see some examples how to use Gibbs sampler.
         X_2|X_1 \sim \text{N}\left(\rho x_1, (1-\rho^2)\right)
     \]
 
-    So, the Gibbs sampler algorithm for this case would be,
+    So, the Gibbs sampler algorithm for this case would be
     \begin{enumerate}
         \item Set an initial state $ \left(x_1^{(0)} , x_2^{(0)} \right) $
         \item We obtain the next state $ \left( x_1^{(t+1)} , x_2^{t+1} \right) $ through the full conditional distributions, 
@@ -141,7 +141,7 @@ Now, we see some examples how to use Gibbs sampler.
 \begin{example}[Simulating Beta-Binomial Distribution]
 
     If $ X|p \sim \text{Bin}(n,p)$ for some fix $ n $, and $ p \sim \text{Beta}(\alpha,\beta) $, then the marginal distribution of $ X $ would be called a \textbf{Beta-Binomial distribution}.
-    Its probability density function,
+    Its probability density function
     \begin{align*}
         f_X(x) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} {n\choose x} \int_{0}^{1} p^{x + \alpha -1}(1-p)^{n - x + \beta -1}dp \ \ x = 0,1,2,\ldots,n  
     \end{align*}
@@ -171,7 +171,7 @@ Now, we see some examples how to use Gibbs sampler.
 
     Form \Cref{eq:p|x} we conclude that $ p|X\sim \text{Beta}(x+\alpha,n-x+\beta) $.
 
-    So, the Gibbs sampler algorithm for this example,
+    So, the Gibbs sampler algorithm for this example
     \begin{enumerate}
         \item Choose an initial state $ p^{(0)} \sim \text{Beta}(\alpha,\beta)  $.
         \item Obtain the next state $ \left(x^{(t+1)}, p^{(t+1)}\right) $ through the full conditional distributions,
@@ -206,7 +206,7 @@ Now, we see some examples how to use Gibbs sampler.
         f\left(\mu, \sigma^2|d^{n} \right) \propto f\left( d^{n} |\mu,\sigma^2 \right) f\left( \mu,\sigma^2 \right)
     \end{equation}
 
-    The \textbf{likelihood function},
+    The \textbf{likelihood function}
     \begin{align*}
         f\left( d^{n} |\mu,\sigma^2 \right) &= \prod_{i=1}^{n} \left( \frac{1}{\sqrt{2 \pi \sigma^2 }} \exp \left( - \frac{ (d_i - \mu)^2 }{ 2 \sigma^2 } \right) \right) \\ 
                                             &= \frac{ 1 }{ \left( 2 \pi \sigma^{2}  \right)^{\frac{n}{2}}  } \exp \left( - \frac{ \sum_{i = 1}^{n} \left( d_i - \mu \right)^{2}   }{ 2 \sigma^2 } \right) \numberthis \label{eq:likelihood function}
@@ -289,7 +289,7 @@ Now, we see some examples how to use Gibbs sampler.
                                 &\propto \tx{Inv-Gamma}\left( \alpha + \frac{ n }{ 2 }, \beta + \frac{ \sum_{i=1}^{n} (d_i-\mu)^{2} }{ 2 } \right)
     \end{align*}
 
-    And now if we take Scale-Inv-$ \chi^{2} $ as prior of $ \sigma^{2} $ we the posterior to be,
+    And now if we take Scale-Inv-$ \chi^{2} $ as prior of $ \sigma^{2} $ we the posterior to be
     \begin{align*}
         f(\sigma^{2}|d^{n} ,\mu) &\propto \left( \frac{ 1 }{ 2 \pi \sigma^{2} } \right)^{n/2} 
         \exp \left( - \frac{ \sum_{i=1}^{n} (d_i - \mu)^{2} }{ 2 \sigma^{2} } \right) 
@@ -306,12 +306,12 @@ Now, we see some examples how to use Gibbs sampler.
 
     When we take Inv-Gamma$(\alpha,\beta)$ as prior of $ \sigma^{2} $,
     \begin{enumerate}
-        \item Set an initial state $ \left( \mu^{(0)}, (\sigma^{2})^{(0)}\right)$. Were,
+        \item Set an initial state $ \left( \mu^{(0)}, (\sigma^{2})^{(0)}\right)$. Where
             \begin{align*}
                 \mu^{(0)} &\sim \tx{N}(\theta,\sigma_{\mu}^{2}  ) \\ 
                 \left(\sigma^{2}\right)^{(0)} &\sim \tx{Inv-Gamma}(\alpha,\beta)  
             \end{align*}
-        \item We obtain the next state $ \left( \mu^{(t+1)}, (\sigma^{2})^{(t+1)} \right) $ by the full conditionals,
+        \item We obtain the next state $ \left( \mu^{(t+1)}, (\sigma^{2})^{(t+1)} \right) $ by the full conditionals
             \begin{align*}
                 \mu^{(t+1)} &\sim \tx{N}\left( \frac{ \sigma_{\mu}^{2}\sum_{i=1}^{n} d_i + (\sigma^{2})^{(t)} \theta  }{ n \sigma_{\mu}^{2} + (\sigma^{2})^{(t)}  }, \frac{ \sigma_{\mu}^{2}(\sigma^{2})^{(t)}   }{ n \sigma_{\mu}^{2} + (\sigma^{2})^{(t)}  } \right) \\ 
                 (\sigma^{2})^{(t+1)} &\sim \tx{Inv-Gamma}\left( \alpha + \frac{ n }{ 2 }, \beta + \frac{ \sum_{i=1}^{n} (d_i-(\mu)^{(t+1)} )^{2} }{ 2 } \right)
@@ -327,26 +327,26 @@ Now, we see some examples how to use Gibbs sampler.
         \caption{Accepted values of $ \mu $ and $ \sigma^{2} $ when prior of $ \sigma^{2} $ is Inv-Gamma$(\alpha,\beta)$}
         \label{fig:inv-gamma pre burn-in}
     \end{figure}
-    Now jugging form \Cref{fig:inv-gamma pre burn-in} we have to remove first few samples as Burn-In. So after removing burn-in we get $ \mu = 9.9230 $ and $ \sigma^{2}=9.0160 $ which is close to original.
+    Now jugging form \Cref{fig:inv-gamma pre burn-in} we have to remove first few samples as Burn-in. So after removing burn-in we get $ \mu = 9.9230 $ and $ \sigma^{2}=9.0160 $ which is close to original.
     \begin{figure}[H]
         \centering
         \includegraphics[width=1\textwidth]{images/gibbs/example3/inv-gamma-post-burnin.png}
-        \caption{Accepted values of $ \mu $ and $ \sigma^{2} $ after removing Burn-In when prior of $ \sigma^{2} $ is Inv-Gamma$(\alpha,\beta)$}
+        \caption{Accepted values of $ \mu $ and $ \sigma^{2} $ after removing Burn-in when prior of $ \sigma^{2} $ is Inv-Gamma$(\alpha,\beta)$}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.6\textwidth]{images/gibbs/example3/inv-gamma-scatter-post-burnin.png}
-        \caption{Scatter plot of $ \mu $ and $ \sigma^{2} $ together after removing Burn-In when prior of $ \sigma^{2} $ is Inv-Gamma$(\alpha,\beta)$}
+        \caption{Scatter plot of $ \mu $ and $ \sigma^{2} $ together after removing Burn-in when prior of $ \sigma^{2} $ is Inv-Gamma$(\alpha,\beta)$}
     \end{figure}
     
-    Now if we take Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$ as prior of $ \sigma^{2} $, the algorithm become,
+    Now if we take Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$ as prior of $ \sigma^{2} $, the algorithm become
     \begin{enumerate}
-        \item Set an initial state $ \left( \mu^{(0)}, (\sigma^{2})^{(0)}\right)$. Were,
+        \item Set an initial state $ \left( \mu^{(0)}, (\sigma^{2})^{(0)}\right)$. Where
             \begin{align*}
                 \mu^{(0)} &\sim \tx{N}(\theta,\sigma_{\mu}^{2}  ), \\ 
                 \left(\sigma^{2}\right)^{(0)} &\sim \tx{Scale-Inv-}\chi^{2}(\nu,\sigma^{2}_0)  
             \end{align*}
-        \item We obtain the next state $ \left( \mu^{(t+1)}, (\sigma^{2})^{(t+1)} \right) $ by the full conditionals,
+        \item We obtain the next state $ \left( \mu^{(t+1)}, (\sigma^{2})^{(t+1)} \right) $ by the full conditionals
             \begin{align*}
                 \mu^{(t+1)} &\sim \tx{N}\left( \frac{ \sigma_{\mu}^{2}\sum_{i=1}^{n} d_i + (\sigma^{2})^{(t)} \theta  }{ n \sigma_{\mu}^{2} + (\sigma^{2})^{(t)}  }, \frac{ \sigma_{\mu}^{2}(\sigma^{2})^{(t)}   }{ n \sigma_{\mu}^{2} + (\sigma^{2})^{(t)}  } \right), \\ 
                 (\sigma^{2})^{(t+1)} &\sim \tx{Scale-Inv-}\chi^{2} \left( \nu+ n , \frac{ \sum_{i=1}^{n}(d_i-\mu^{(t+1)} )^{2} + \nu \sigma_0^{2} }{ \nu + n } \right)
@@ -369,18 +369,18 @@ Now, we see some examples how to use Gibbs sampler.
         \label{fig:scale-inv-chi2 pre burn-in}
     \end{figure}
 
-    Here also we remove first 25\% of term as Burn-In, and then we get $ \mu $ to be 9.9230 and $ \sigma^{2} $ to be 9.0258.  
+    Here also we remove first 25\% of term as Burn-in, and then we get $ \mu $ to be 9.9230 and $ \sigma^{2} $ to be 9.0258.  
     
     \begin{figure}[H]
         \centering
         \includegraphics[width=1\textwidth]{images/gibbs/example3/chi2-post-burnin.png}
-        \caption{Accepted values of $ \mu $ and $ \sigma^{2} $ after removing Burn-In when prior of $ \sigma^{2} $ is Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$}
+        \caption{Accepted values of $ \mu $ and $ \sigma^{2} $ after removing Burn-in when prior of $ \sigma^{2} $ is Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$}
     \end{figure}
 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.6\textwidth]{images/gibbs/example3/chi2-scatter-post-burnin.png}
-        \caption{Scatter plot of $ \mu $ and $ \sigma^{2} $ together after removing Burn-In when prior of $ \sigma^{2} $ is Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$}
+        \caption{Scatter plot of $ \mu $ and $ \sigma^{2} $ together after removing Burn-in when prior of $ \sigma^{2} $ is Scale-Inv-$\chi^{2}(\nu,\sigma^{2}_0)$}
     \end{figure}
 
     \begin{figure}[H]
